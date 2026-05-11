@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wolt Fleet Intelligence — Malta</title>
+<style>
+:root{--bg:#0f1117;--s:#1a1d27;--s2:#242836;--bd:#2d3142;--tx:#e1e4eb;--t2:#8b90a0;--ac:#6c8cff;--gn:#34d399;--yl:#fbbf24;--rd:#f87171;--or:#fb923c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--tx);line-height:1.5;font-size:14px}
+.ctn{max-width:1440px;margin:0 auto;padding:20px 24px}
+header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+header h1{font-size:20px;font-weight:700;letter-spacing:-.3px}
+.meta{font-size:12px;color:var(--t2)}
+.tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--bd);padding-bottom:0}
+.tab{padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--t2);border-bottom:2px solid transparent;transition:all .15s}
+.tab:hover{color:var(--tx)}
+.tab.on{color:var(--ac);border-bottom-color:var(--ac)}
+.pane{display:none}.pane.on{display:block}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:16px}
+.sc{background:var(--s);border:1px solid var(--bd);border-radius:8px;padding:12px 14px}
+.sc .lb{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.sc .vl{font-size:20px;font-weight:700;letter-spacing:-.4px}
+.sc .sub{font-size:10px;color:var(--t2);margin-top:1px}
+.sc.gn .vl{color:var(--gn)}.sc.yl .vl{color:var(--yl)}.sc.rd .vl{color:var(--rd)}
+.sect{margin-bottom:24px}
+.sect h2{font-size:15px;font-weight:700;margin-bottom:2px}
+.sect h3{font-size:13px;font-weight:600;margin-bottom:6px}
+.subt{font-size:12px;color:var(--t2);margin-bottom:10px}
+.ctrl{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.ctrl label{font-size:11px;color:var(--t2)}
+.ctrl select,.ctrl input[type=number]{background:var(--s2);border:1px solid var(--bd);border-radius:5px;padding:4px 7px;font-size:12px;color:var(--tx)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{text-align:left;padding:6px 8px;font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--bd);cursor:pointer;white-space:nowrap;user-select:none}
+thead th:hover{color:var(--tx)}
+tbody td{padding:5px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}
+tbody tr:hover{background:var(--s2)}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+.dm{color:var(--t2)}.gd{color:var(--gn)}.wr{color:var(--yl)}.bd{color:var(--rd)}
+.br{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.bl{font-size:11px;color:var(--t2);min-width:48px;text-align:right}
+.bt{flex:1;height:18px;background:var(--s2);border-radius:3px;overflow:hidden}
+.bf{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:5px;font-size:10px;font-weight:600;color:#fff;min-width:20px}
+.bf.a{background:var(--ac)}.bf.g{background:#2a7a5a}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:800px){.dg{grid-template-columns:1fr}}
+.ic{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.icd{background:var(--s);border:1px solid var(--bd);border-radius:8px;padding:14px}
+.icd h3{font-size:12px;font-weight:600;margin-bottom:4px}.icd p{font-size:12px;color:var(--t2)}
+.co{background:var(--s);border-left:3px solid var(--ac);padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:12px;font-size:12px}
+.wa-card{background:var(--s);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-bottom:10px}
+.wa-card .hd{font-size:12px;font-weight:600;margin-bottom:6px}
+.wa-card .bd2{font-size:12px;color:var(--t2)}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.pill.bolt{background:#1b3a2a;color:var(--gn)}.pill.wolt{background:#1e2a4a;color:#7da8ff}
+.upload-zone{border:2px dashed var(--bd);border-radius:8px;padding:20px;margin-bottom:16px;background:var(--s)}
+.upload-zone h3{font-size:14px;font-weight:600;margin-bottom:8px}
+.upload-zone p{font-size:12px;color:var(--t2);margin-bottom:12px}
+.ur{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.uf{display:flex;flex-direction:column;gap:3px}
+.uf label{font-size:10px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.uf input[type=file]{font-size:12px;color:var(--tx)}
+.uf input[type=text]{background:var(--s2);border:1px solid var(--bd);border-radius:5px;padding:5px 8px;font-size:12px;color:var(--tx);width:160px}
+.btn{background:var(--ac);color:#fff;border:none;border-radius:5px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer}
+.btn:hover{opacity:.85}
+.divider{height:1px;background:var(--bd);margin:16px 0}
+</style>
+</head>
+<body>
+<div class="ctn">
+<header>
+<h1>Wolt Fleet Intelligence — Malta</h1>
+<span class="meta">Data window: Apr 11 – May 11, 2026 (30 days) · Last updated: May 11, 2026</span>
+</header>
+<div style="font-size:11px;color:var(--t2);margin-bottom:12px;padding:6px 12px;background:var(--s);border-radius:6px;border-left:2px solid var(--yl);">Wolt pays fleets an additional <b style="color:var(--yl)">18%</b> on top of courier earnings — not visible to couriers. CPO in the CSVs = courier-facing pay only; actual Wolt cost per order is ~18% higher.</div>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;background:var(--s);border:1px solid var(--bd);border-radius:8px;padding:10px 16px;">
+<label style="font-size:12px;color:var(--t2);font-weight:600;white-space:nowrap;">Quality bar — min TAR:</label>
+<input type="range" min="0" max="95" step="5" value="60" oninput="onTarChange(this.value)" style="flex:1;max-width:200px;accent-color:var(--ac);">
+<span class="tar-val" style="font-size:14px;font-weight:700;min-width:36px;">60%</span>
+</div>
+
+<div class="tabs" id="mainTabs"></div>
+<div id="panes"></div>
+</div>
+
+<script>
+const FLEETS = [{"name": "Ezee Transportation", "key": "ezee", "couriers": [{"n": "Veera V.S. N. R Pada EZ M", "v": "Motorcycle", "id": "1145299", "t": "Malta", "off": false, "del": 294, "tar": 81.0, "tcr": 95.0, "dph": 2.73, "ts": 388, "oh": 107.5, "ot": 69.2, "ih": 38.3, "e": 1100.37, "tip": 30.5, "bon": 22.0, "adj": 18.1, "ut": 64.4, "eph": 10.24, "cpo": 3.74, "a": true}, {"n": "zohaib anjum", "v": "Motorcycle", "id": "1819591", "t": "Malta", "off": false, "del": 93, "tar": 59.0, "tcr": 93.0, "dph": 2.03, "ts": 174, "oh": 45.8, "ot": 24.1, "ih": 21.6, "e": 310.19, "tip": 6.51, "bon": null, "adj": null, "ut": 52.7, "eph": 6.78, "cpo": 3.34, "a": true}, {"n": "Bikash Gandharba", "v": "Motorcycle", "id": "5827760", "t": "Malta", "off": false, "del": 283, "tar": 51.0, "tcr": 96.0, "dph": 1.64, "ts": 577, "oh": 172.6, "ot": 62.1, "ih": 110.4, "e": 901.14, "tip": 53.56, "bon": 15.0, "adj": null, "ut": 36.0, "eph": 5.22, "cpo": 3.18, "a": true}, {"n": "Nobish Nobish EZ M$ OFB", "v": "Car", "id": "5887983", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Arun Kadasserithodi EZ M OFB", "v": "Motorcycle", "id": "6018798", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Mitkumar Vijaybhai Patel EZ M W OFB", "v": "Motorcycle", "id": "6018799", "t": "-", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Bilal Naseer EZ M OFB", "v": "Car", "id": "6018800", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Radhey Shyam Tyagi EZ M", "v": "Motorcycle", "id": "6018801", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Mithum Shanika Dilan EZ M-$ OFB", "v": "Car", "id": "6018802", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Hamandeep Singh EZ M", "v": "Motorcycle", "id": "6018803", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Suman Limbu Okhrabo EZ M-$ OFB", "v": "Motorcycle", "id": "6018804", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Om Prakash EZ M", "v": "Motorcycle", "id": "6018805", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Arjun Kumar Chaudhary EZ M", "v": "Motorcycle", "id": "6018806", "t": "Malta", "off": false, "del": 31, "tar": 82.0, "tcr": 86.0, "dph": 2.21, "ts": 45, "oh": 14.1, "ot": 8.0, "ih": 6.0, "e": 104.5, "tip": 4.68, "bon": null, "adj": null, "ut": 56.9, "eph": 7.44, "cpo": 3.37, "a": true}, {"n": "Kiran Lama EZ M", "v": "Motorcycle", "id": "6018808", "t": "Malta", "off": false, "del": 11, "tar": 29.0, "tcr": 92.0, "dph": 1.17, "ts": 42, "oh": 9.4, "ot": 2.7, "ih": 6.7, "e": 46.5, "tip": null, "bon": null, "adj": null, "ut": 28.4, "eph": 4.96, "cpo": 4.23, "a": true}, {"n": "Dev Raj EZ M", "v": "Motorcycle", "id": "6018810", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Naveed Akram EZ M OFB", "v": "Motorcycle", "id": "6018812", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Hamza Aslam EZ M", "v": "Motorcycle", "id": "6018814", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Salman Sharjeel EZ M", "v": "Motorcycle", "id": "6018818", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Vishal Kumar EZ M", "v": "Motorcycle", "id": "6018822", "t": "Malta", "off": false, "del": 211, "tar": 70.0, "tcr": 89.0, "dph": 1.76, "ts": 343, "oh": 120.0, "ot": 61.4, "ih": 58.5, "e": 792.26, "tip": 24.87, "bon": 14.0, "adj": 1.25, "ut": 51.2, "eph": 6.6, "cpo": 3.75, "a": true}, {"n": "Ashok Kumar EZ M", "v": "Motorcycle", "id": "6038461", "t": "Malta", "off": false, "del": 191, "tar": 73.0, "tcr": 91.0, "dph": 2.4, "ts": 291, "oh": 79.6, "ot": 43.9, "ih": 35.7, "e": 691.3, "tip": 26.09, "bon": 14.0, "adj": 1.25, "ut": 55.2, "eph": 8.69, "cpo": 3.62, "a": true}, {"n": "Arjun Jith Puthalath Jith EZ M OFB", "v": "Motorcycle", "id": "6038462", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Jomon Joshi EZ M", "v": "Motorcycle", "id": "6038463", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Saif Iqbal EZ M", "v": "Car", "id": "6038464", "t": "Malta", "off": false, "del": 0, "tar": 0.0, "tcr": 0.0, "dph": null, "ts": 1, "oh": 0.1, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Touseef Ahmad EZ M", "v": "Motorcycle", "id": "6075405", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sahil Gurung EZ M", "v": "Motorcycle", "id": "6075416", "t": "Gozo", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sandip Tiwarli EZ M", "v": "Motorcycle", "id": "6075417", "t": "Gozo", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Jeewan Bista EZ M OFB MULTIAPP", "v": "Motorcycle", "id": "6075418", "t": "Gozo", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Milan Neupane (MA) EZ M", "v": "Motorcycle", "id": "6075420", "t": "Gozo", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sikendra Yadav EZ M", "v": "Motorcycle", "id": "6118654", "t": "Malta", "off": false, "del": 339, "tar": 46.0, "tcr": 94.0, "dph": 1.68, "ts": 792, "oh": 202.3, "ot": 91.3, "ih": 111.0, "e": 1135.67, "tip": 20.24, "bon": 7.0, "adj": 20.2, "ut": 45.1, "eph": 5.61, "cpo": 3.35, "a": true}, {"n": "Diwas Raj Ghimire EZ M", "v": "Motorcycle", "id": "6183906", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Yousaf Hussain EZ M CT", "v": "Motorcycle", "id": "6229978", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Suraj Chhetri EZ M", "v": "Motorcycle", "id": "6273464", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Suraj Chhetri EZ M", "v": "Motorcycle", "id": "6276003", "t": "Malta", "off": false, "del": 385, "tar": 52.0, "tcr": 96.0, "dph": 1.71, "ts": 770, "oh": 225.1, "ot": 97.3, "ih": 127.8, "e": 1465.77, "tip": 37.83, "bon": 15.0, "adj": 3.2, "ut": 43.2, "eph": 6.51, "cpo": 3.81, "a": true}, {"n": "Mohd Farrooq EZ M", "v": "Motorcycle", "id": "6278251", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Rohit Raj EZ M", "v": "Motorcycle", "id": "6342816", "t": "Malta", "off": false, "del": 360, "tar": 85.0, "tcr": 93.0, "dph": 2.09, "ts": 453, "oh": 172.5, "ot": 109.8, "ih": 62.7, "e": 1206.47, "tip": 33.0, "bon": null, "adj": 6.0, "ut": 63.7, "eph": 6.99, "cpo": 3.35, "a": true}, {"n": "Varinder Singh EZ M-$ OFB", "v": "Motorcycle", "id": "6342817", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Manish Hemjan EZ M", "v": "Motorcycle", "id": "6463606", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Anoop Godara EZ M", "v": "Motorcycle", "id": "6475839", "t": "Malta", "off": false, "del": 203, "tar": 64.0, "tcr": 88.0, "dph": 1.6, "ts": 362, "oh": 127.2, "ot": 57.0, "ih": 70.2, "e": 720.97, "tip": 20.89, "bon": 22.0, "adj": 0.5, "ut": 44.8, "eph": 5.67, "cpo": 3.55, "a": true}, {"n": "Avishek Raut EZ M", "v": "Motorcycle", "id": "6505769", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Rominkumar R. Patel EZ M", "v": "Motorcycle", "id": "6518466", "t": "Malta", "off": false, "del": 196, "tar": 33.0, "tcr": 88.0, "dph": 1.52, "ts": 677, "oh": 128.9, "ot": 48.8, "ih": 80.1, "e": 716.41, "tip": 18.5, "bon": 7.0, "adj": 9.5, "ut": 37.9, "eph": 5.56, "cpo": 3.66, "a": true}, {"n": "Mohammad Foysal Miah EZ M", "v": "Motorcycle", "id": "6544464", "t": "Malta", "off": false, "del": 437, "tar": 53.0, "tcr": 97.0, "dph": 2.43, "ts": 850, "oh": 180.1, "ot": 114.2, "ih": 65.9, "e": 1534.27, "tip": 63.7, "bon": null, "adj": 0.64, "ut": 63.4, "eph": 8.52, "cpo": 3.51, "a": true}, {"n": "Maruti Basappa Tyapi EZ M OFB", "v": "Motorcycle", "id": "6562132", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Mitulkumar Vasantbhai Patel EZ M$ OFB", "v": "Car", "id": "6562140", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Ganga Prasad Yadav EZ M", "v": "Motorcycle", "id": "6575327", "t": "Malta", "off": false, "del": 549, "tar": 86.0, "tcr": 98.0, "dph": 2.53, "ts": 648, "oh": 216.8, "ot": 122.8, "ih": 94.0, "e": 1749.54, "tip": 52.82, "bon": 14.0, "adj": null, "ut": 56.6, "eph": 8.07, "cpo": 3.19, "a": true}, {"n": "Het Latikumar Patel EZ M", "v": "Motorcycle", "id": "6582201", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Suresh Ghimire EZ M CT$ OFB", "v": "Motorcycle", "id": "6589318", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Venkata S. P. Kasar EZ M", "v": "Motorcycle", "id": "6602475", "t": "Malta", "off": false, "del": 320, "tar": 79.0, "tcr": 96.0, "dph": 2.98, "ts": 430, "oh": 107.6, "ot": 70.0, "ih": 37.6, "e": 1058.11, "tip": 48.56, "bon": 14.0, "adj": 6.6, "ut": 65.0, "eph": 9.84, "cpo": 3.31, "a": true}, {"n": "Sanjay Shakya EZ M", "v": "Motorcycle", "id": "6602476", "t": "Malta", "off": false, "del": 405, "tar": 74.0, "tcr": 99.0, "dph": 2.62, "ts": 558, "oh": 154.7, "ot": 102.3, "ih": 52.4, "e": 1469.88, "tip": 57.03, "bon": null, "adj": 7.71, "ut": 66.1, "eph": 9.5, "cpo": 3.63, "a": true}, {"n": "Akhil Naga Sai Kemisetty EZ M", "v": "Motorcycle", "id": "6615885", "t": "Malta", "off": false, "del": 96, "tar": 74.0, "tcr": 91.0, "dph": 2.11, "ts": 142, "oh": 45.5, "ot": 22.4, "ih": 23.1, "e": 345.98, "tip": 4.5, "bon": null, "adj": null, "ut": 49.2, "eph": 7.6, "cpo": 3.6, "a": true}, {"n": "Mohhamed Feroz EZ M", "v": "Motorcycle", "id": "6621229", "t": "Malta", "off": false, "del": 350, "tar": 81.0, "tcr": 97.0, "dph": 2.56, "ts": 443, "oh": 136.6, "ot": 89.2, "ih": 47.4, "e": 1201.8, "tip": 39.01, "bon": null, "adj": 13.1, "ut": 65.3, "eph": 8.8, "cpo": 3.43, "a": true}, {"n": "Suleman EZ MCT", "v": "Motorcycle", "id": "6623608", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Pavankumar Shantilal Barde EZ M", "v": "Motorcycle", "id": "6638654", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sourav Padwal EZ M", "v": "Motorcycle", "id": "6638678", "t": "Malta", "off": false, "del": 445, "tar": 43.0, "tcr": 93.0, "dph": 1.5, "ts": 1122, "oh": 297.6, "ot": 138.9, "ih": 158.8, "e": 1582.5, "tip": 27.67, "bon": 7.0, "adj": 7.35, "ut": 46.7, "eph": 5.32, "cpo": 3.56, "a": true}, {"n": "Sujan Thapa Magar EZ M", "v": "Motorcycle", "id": "6642590", "t": "Gozo", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Pukar Rai EZ M", "v": "Motorcycle", "id": "6642594", "t": "Malta", "off": false, "del": 262, "tar": 74.0, "tcr": 95.0, "dph": 1.8, "ts": 374, "oh": 145.6, "ot": 63.0, "ih": 82.6, "e": 993.09, "tip": 19.97, "bon": null, "adj": 3.9, "ut": 43.2, "eph": 6.82, "cpo": 3.79, "a": true}, {"n": "Ritesh Sunar EZ M", "v": "Motorcycle", "id": "6642674", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Shadaab Syed EZ M", "v": "Motorcycle", "id": "6653878", "t": "Malta", "off": false, "del": 357, "tar": 56.0, "tcr": 94.0, "dph": 2.49, "ts": 675, "oh": 143.4, "ot": 87.6, "ih": 55.8, "e": 1135.1, "tip": 55.26, "bon": 7.0, "adj": 1.0, "ut": 61.1, "eph": 7.92, "cpo": 3.18, "a": true}, {"n": "Binod Magar EZ M", "v": "Motorcycle", "id": "6654013", "t": "Malta", "off": false, "del": 330, "tar": 62.0, "tcr": 93.0, "dph": 1.81, "ts": 578, "oh": 182.1, "ot": 93.7, "ih": 88.4, "e": 1344.16, "tip": 37.6, "bon": 14.0, "adj": 3.75, "ut": 51.5, "eph": 7.38, "cpo": 4.07, "a": true}, {"n": "Hirenkumar G. Chaudhari EZ M", "v": "Motorcycle", "id": "6654019", "t": "Malta", "off": false, "del": 166, "tar": 70.0, "tcr": 90.0, "dph": 2.1, "ts": 263, "oh": 79.2, "ot": 46.0, "ih": 33.2, "e": 609.96, "tip": 18.0, "bon": 7.0, "adj": 6.1, "ut": 58.0, "eph": 7.7, "cpo": 3.67, "a": true}, {"n": "Prem Bahadur Malla EZ M", "v": "Motorcycle", "id": "6654021", "t": "Malta", "off": false, "del": 462, "tar": 64.0, "tcr": 95.0, "dph": 1.85, "ts": 770, "oh": 250.1, "ot": 121.3, "ih": 128.8, "e": 1700.08, "tip": 48.02, "bon": 22.0, "adj": 17.92, "ut": 48.5, "eph": 6.8, "cpo": 3.68, "a": true}, {"n": "Arun Rana EZ M", "v": "Motorcycle", "id": "6654022", "t": "Malta", "off": false, "del": 165, "tar": 43.0, "tcr": 87.0, "dph": 0.87, "ts": 439, "oh": 189.5, "ot": 34.7, "ih": 154.8, "e": 542.56, "tip": 19.5, "bon": null, "adj": null, "ut": 18.3, "eph": 2.86, "cpo": 3.29, "a": true}, {"n": "Dhanendra Kumar Rai EZ M", "v": "Motorcycle", "id": "6654023", "t": "Malta", "off": false, "del": 145, "tar": 72.0, "tcr": 99.0, "dph": 2.13, "ts": 205, "oh": 68.2, "ot": 45.9, "ih": 22.4, "e": 543.62, "tip": 29.15, "bon": null, "adj": -4.74, "ut": 67.2, "eph": 7.97, "cpo": 3.75, "a": true}, {"n": "Rajkiran Rana Magar EZ M", "v": "Motorcycle", "id": "6654026", "t": "Malta", "off": false, "del": 137, "tar": 79.0, "tcr": 96.0, "dph": 1.82, "ts": 182, "oh": 75.2, "ot": 31.1, "ih": 44.1, "e": 498.12, "tip": 22.57, "bon": 7.0, "adj": null, "ut": 41.4, "eph": 6.62, "cpo": 3.64, "a": true}, {"n": "Jayraj Maheshkumar VagheEZ M", "v": "Motorcycle", "id": "6654052", "t": "Malta", "off": false, "del": 106, "tar": 65.0, "tcr": 91.0, "dph": 2.24, "ts": 178, "oh": 47.4, "ot": 23.9, "ih": 23.4, "e": 371.13, "tip": 15.34, "bon": null, "adj": null, "ut": 50.5, "eph": 7.83, "cpo": 3.5, "a": true}, {"n": "Vishal Bogelli EZ M", "v": "Motorcycle", "id": "6664452", "t": "Malta", "off": false, "del": 170, "tar": 87.0, "tcr": 93.0, "dph": 2.18, "ts": 209, "oh": 78.0, "ot": 51.9, "ih": 26.1, "e": 665.75, "tip": 32.44, "bon": 7.0, "adj": 17.4, "ut": 66.6, "eph": 8.54, "cpo": 3.92, "a": true}, {"n": "Krishna Prasad POKHAREL EZ M", "v": "Motorcycle", "id": "6664453", "t": "Malta", "off": false, "del": 268, "tar": 47.0, "tcr": 94.0, "dph": 1.68, "ts": 609, "oh": 159.2, "ot": 75.0, "ih": 84.2, "e": 1070.68, "tip": 35.51, "bon": 7.0, "adj": null, "ut": 47.1, "eph": 6.73, "cpo": 4.0, "a": true}, {"n": "Nor Prasad Poudel EZ M", "v": "Motorcycle", "id": "6667539", "t": "Malta", "off": false, "del": 578, "tar": 87.0, "tcr": 95.0, "dph": 2.41, "ts": 705, "oh": 239.5, "ot": 145.0, "ih": 94.5, "e": 2134.23, "tip": 63.31, "bon": 22.0, "adj": 0.18, "ut": 60.6, "eph": 8.91, "cpo": 3.69, "a": true}, {"n": "Sandesh Mandal EZ M", "v": "Motorcycle", "id": "6667540", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Karan Vipulkumar PATEL EZ M-$ OFB", "v": "Motorcycle", "id": "6676842", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Bhargava Reddy Bolavaram EZ M", "v": "Motorcycle", "id": "6680173", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Ajay Chaudhary EZ M", "v": "Motorcycle", "id": "6689913", "t": "Malta", "off": false, "del": 446, "tar": 69.0, "tcr": 97.0, "dph": 2.04, "ts": 670, "oh": 218.5, "ot": 122.0, "ih": 96.6, "e": 1550.56, "tip": 67.5, "bon": 15.0, "adj": 6.6, "ut": 55.8, "eph": 7.1, "cpo": 3.48, "a": true}, {"n": "Milan Gurung EZ M", "v": "Motorcycle", "id": "6690876", "t": "Malta", "off": false, "del": 232, "tar": 66.0, "tcr": 96.0, "dph": 2.1, "ts": 365, "oh": 110.5, "ot": 53.7, "ih": 56.7, "e": 845.89, "tip": 25.5, "bon": null, "adj": 1.6, "ut": 48.6, "eph": 7.66, "cpo": 3.65, "a": true}, {"n": "Sunil kumar Chatragadda EZ M", "v": "Motorcycle", "id": "6698175", "t": "Malta", "off": false, "del": 269, "tar": 48.0, "tcr": 96.0, "dph": 2.42, "ts": 584, "oh": 111.0, "ot": 60.6, "ih": 50.5, "e": 831.85, "tip": 75.0, "bon": null, "adj": 16.67, "ut": 54.6, "eph": 7.49, "cpo": 3.09, "a": true}, {"n": "Manpreet Singh EZ MOFBOFBOFBOFB", "v": "Motorcycle", "id": "6698176", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Ajit Kumar Shah EZ M", "v": "Motorcycle", "id": "6698177", "t": "Malta", "off": false, "del": 353, "tar": 54.0, "tcr": 92.0, "dph": 1.7, "ts": 708, "oh": 207.2, "ot": 86.9, "ih": 120.3, "e": 1214.9, "tip": 16.0, "bon": 7.0, "adj": 3.1, "ut": 41.9, "eph": 5.86, "cpo": 3.44, "a": true}, {"n": "Andresh Subba EZ", "v": "Motorcycle", "id": "6725644", "t": "Malta", "off": false, "del": 158, "tar": 86.0, "tcr": 91.0, "dph": 2.0, "ts": 203, "oh": 79.0, "ot": 45.6, "ih": 33.4, "e": 581.48, "tip": 21.0, "bon": null, "adj": 2.4, "ut": 57.8, "eph": 7.36, "cpo": 3.68, "a": true}, {"n": "Harpreet Singh EZ M", "v": "Motorcycle", "id": "6725645", "t": "Malta", "off": false, "del": 314, "tar": 77.0, "tcr": 96.0, "dph": 1.66, "ts": 423, "oh": 189.7, "ot": 85.6, "ih": 104.1, "e": 1130.37, "tip": 25.0, "bon": 7.0, "adj": 9.35, "ut": 45.1, "eph": 5.96, "cpo": 3.6, "a": true}, {"n": "Aravind Kantegari EZ M", "v": "Motorcycle", "id": "6740933", "t": "Malta", "off": false, "del": 432, "tar": 82.0, "tcr": 93.0, "dph": 3.01, "ts": 571, "oh": 143.3, "ot": 96.5, "ih": 46.8, "e": 1533.64, "tip": 56.97, "bon": 15.0, "adj": 20.01, "ut": 67.3, "eph": 10.7, "cpo": 3.55, "a": true}, {"n": "Akalesh Kumar Chaudhary EZ M", "v": "Motorcycle", "id": "6740934", "t": "Malta", "off": false, "del": 267, "tar": 66.0, "tcr": 93.0, "dph": 2.05, "ts": 433, "oh": 130.5, "ot": 87.2, "ih": 43.3, "e": 952.94, "tip": 39.52, "bon": null, "adj": 7.77, "ut": 66.8, "eph": 7.3, "cpo": 3.57, "a": true}, {"n": "Saikumar Donkini EZ M", "v": "Motorcycle", "id": "6742083", "t": "Malta", "off": false, "del": 474, "tar": 79.0, "tcr": 94.0, "dph": 2.47, "ts": 641, "oh": 191.6, "ot": 112.9, "ih": 78.7, "e": 1661.32, "tip": 86.15, "bon": 22.0, "adj": 1.5, "ut": 58.9, "eph": 8.67, "cpo": 3.5, "a": true}, {"n": "Milan Gurung EZ M", "v": "Motorcycle", "id": "6750932", "t": "Malta", "off": false, "del": 124, "tar": 54.0, "tcr": 98.0, "dph": 1.58, "ts": 234, "oh": 78.7, "ot": 29.4, "ih": 49.3, "e": 441.44, "tip": 23.89, "bon": null, "adj": null, "ut": 37.3, "eph": 5.61, "cpo": 3.56, "a": true}, {"n": "Mohammad Samyoddin EZ M", "v": "Motorcycle", "id": "6758325", "t": "Malta", "off": false, "del": 49, "tar": 90.0, "tcr": 91.0, "dph": 2.16, "ts": 60, "oh": 22.7, "ot": 13.7, "ih": 9.0, "e": 194.33, "tip": 4.0, "bon": null, "adj": 0.8, "ut": 60.3, "eph": 8.55, "cpo": 3.97, "a": true}, {"n": "Bishow Khadka EZ M", "v": "Motorcycle", "id": "6758326", "t": "Malta", "off": false, "del": 196, "tar": 52.0, "tcr": 92.0, "dph": 1.39, "ts": 412, "oh": 140.9, "ot": 50.9, "ih": 90.0, "e": 712.4, "tip": 19.5, "bon": null, "adj": 2.0, "ut": 36.2, "eph": 5.06, "cpo": 3.63, "a": true}, {"n": "Dharmapal Kumar Dhuluri EZ M CT-$ OFB", "v": "Motorcycle", "id": "6758327", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Akshay Chaudhary EZ M-$ OFB", "v": "Motorcycle", "id": "6758328", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Mir Rizwan Ali Khan EZ M", "v": "Motorcycle", "id": "6758329", "t": "Malta", "off": false, "del": 136, "tar": 88.0, "tcr": 92.0, "dph": 2.87, "ts": 169, "oh": 47.3, "ot": 32.1, "ih": 15.2, "e": 449.26, "tip": 30.3, "bon": 7.0, "adj": null, "ut": 67.8, "eph": 9.49, "cpo": 3.3, "a": true}, {"n": "SUJITH Kumar", "v": "Motorcycle", "id": "6771642", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Bikram Chaudhary EZ M", "v": "Motorcycle", "id": "6773534", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Feroj Mattuber EZ M", "v": "Motorcycle", "id": "6773554", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Rajiva Sahu Lochan EZ M", "v": "Motorcycle", "id": "6787929", "t": "Malta", "off": false, "del": 40, "tar": 91.0, "tcr": 98.0, "dph": 2.34, "ts": 45, "oh": 17.1, "ot": 10.5, "ih": 6.6, "e": 169.11, "tip": 8.0, "bon": 7.0, "adj": null, "ut": 61.4, "eph": 9.88, "cpo": 4.23, "a": true}, {"n": "Rajendra Bahadur Khatri EZ M TKT OFB", "v": "Motorcycle", "id": "6788338", "t": "-", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Ramesh Kumar Dhami EZ M SPR OFB", "v": "Motorcycle", "id": "6807220", "t": "Malta", "off": false, "del": 627, "tar": 86.0, "tcr": 98.0, "dph": 2.5, "ts": 751, "oh": 250.7, "ot": 184.1, "ih": 66.6, "e": 2282.38, "tip": 101.58, "bon": 15.0, "adj": 27.7, "ut": 73.4, "eph": 9.11, "cpo": 3.64, "a": true}, {"n": "Rahul Sampson", "v": "Motorcycle", "id": "6819767", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Akram Miya EZ M", "v": "Motorcycle", "id": "6823041", "t": "Malta", "off": false, "del": 500, "tar": 66.0, "tcr": 95.0, "dph": 1.63, "ts": 812, "oh": 306.6, "ot": 142.1, "ih": 164.5, "e": 1854.6, "tip": 46.45, "bon": 14.0, "adj": 12.65, "ut": 46.3, "eph": 6.05, "cpo": 3.71, "a": true}, {"n": "Akshay Kumar THARU EZ M", "v": "Motorcycle", "id": "6823044", "t": "Malta", "off": false, "del": 293, "tar": 73.0, "tcr": 95.0, "dph": 1.89, "ts": 422, "oh": 154.9, "ot": 77.5, "ih": 77.5, "e": 1090.5, "tip": 48.5, "bon": 22.0, "adj": 2.75, "ut": 50.0, "eph": 7.04, "cpo": 3.72, "a": true}, {"n": "Indra Kumar Kattel EZ M", "v": "Motorcycle", "id": "6831419", "t": "Malta", "off": false, "del": 523, "tar": 61.0, "tcr": 96.0, "dph": 1.68, "ts": 898, "oh": 311.1, "ot": 158.7, "ih": 152.5, "e": 2093.45, "tip": 76.88, "bon": 15.0, "adj": 23.9, "ut": 51.0, "eph": 6.73, "cpo": 4.0, "a": true}, {"n": "Ratna Bahadur Karki EZ M", "v": "Motorcycle", "id": "6831420", "t": "Malta", "off": false, "del": 522, "tar": 74.0, "tcr": 96.0, "dph": 1.94, "ts": 737, "oh": 269.2, "ot": 154.3, "ih": 114.9, "e": 1935.68, "tip": 66.0, "bon": 15.0, "adj": 11.8, "ut": 57.3, "eph": 7.19, "cpo": 3.71, "a": true}, {"n": "Saroj Bahadur Baniya EZ M", "v": "Motorcycle", "id": "6834648", "t": "Malta", "off": false, "del": 285, "tar": 99.0, "tcr": 95.0, "dph": 2.47, "ts": 307, "oh": 115.5, "ot": 73.8, "ih": 41.7, "e": 969.04, "tip": 22.73, "bon": null, "adj": 14.69, "ut": 63.9, "eph": 8.39, "cpo": 3.4, "a": true}, {"n": "Santosh\t Kumar EZ M", "v": "Motorcycle", "id": "6848462", "t": "Malta", "off": false, "del": 503, "tar": 66.0, "tcr": 96.0, "dph": 1.65, "ts": 792, "oh": 305.7, "ot": 127.0, "ih": 178.6, "e": 1951.57, "tip": 51.06, "bon": 22.0, "adj": 15.2, "ut": 41.6, "eph": 6.38, "cpo": 3.88, "a": true}, {"n": "Raman CHOUDHARY EZ", "v": "Motorcycle", "id": "6879950", "t": "Malta", "off": false, "del": 205, "tar": 66.0, "tcr": 93.0, "dph": 1.96, "ts": 336, "oh": 104.8, "ot": 56.4, "ih": 48.5, "e": 739.61, "tip": 20.0, "bon": null, "adj": null, "ut": 53.7, "eph": 7.05, "cpo": 3.61, "a": true}, {"n": "Omer Shareef EZ M", "v": "Motorcycle", "id": "6956134", "t": "Malta", "off": false, "del": 686, "tar": 82.0, "tcr": 97.0, "dph": 2.89, "ts": 872, "oh": 237.0, "ot": 167.9, "ih": 69.2, "e": 2428.0, "tip": 107.34, "bon": 22.0, "adj": 2.12, "ut": 70.8, "eph": 10.24, "cpo": 3.54, "a": true}, {"n": "Azhar Musla", "v": "Motorcycle", "id": "6968947", "t": "Malta", "off": false, "del": 577, "tar": 61.0, "tcr": 97.0, "dph": 2.06, "ts": 974, "oh": 280.2, "ot": 176.8, "ih": 103.4, "e": 2225.36, "tip": 77.54, "bon": 7.0, "adj": 1.75, "ut": 63.1, "eph": 7.94, "cpo": 3.86, "a": true}, {"n": "Milan Sharma EZ M-$ OFB", "v": "Motorcycle", "id": "6968950", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "SHER BAHADUR THAPA MAGAR-$ OFB", "v": "Motorcycle", "id": "6977591", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Balaram Banjara EZ M", "v": "Motorcycle", "id": "6981793", "t": "Malta", "off": false, "del": 148, "tar": 43.0, "tcr": 90.0, "dph": 1.14, "ts": 386, "oh": 130.3, "ot": 31.5, "ih": 98.8, "e": 510.06, "tip": 32.25, "bon": 7.0, "adj": 0.5, "ut": 24.2, "eph": 3.91, "cpo": 3.45, "a": true}, {"n": "Mallikarjun Jakkappa Pujari EZ M", "v": "Motorcycle", "id": "6981800", "t": "Malta", "off": false, "del": 768, "tar": 83.0, "tcr": 97.0, "dph": 2.42, "ts": 950, "oh": 316.8, "ot": 204.6, "ih": 112.1, "e": 2661.16, "tip": 103.45, "bon": 22.0, "adj": 2.0, "ut": 64.6, "eph": 8.4, "cpo": 3.47, "a": true}, {"n": "Prakash Anand EZ M", "v": "Motorcycle", "id": "6981801", "t": "Malta", "off": false, "del": 245, "tar": 56.0, "tcr": 94.0, "dph": 2.07, "ts": 464, "oh": 118.4, "ot": 59.3, "ih": 59.1, "e": 819.03, "tip": 39.04, "bon": 14.0, "adj": 3.0, "ut": 50.1, "eph": 6.92, "cpo": 3.34, "a": true}, {"n": "Khem Raj Tiwari EZ M", "v": "Motorcycle", "id": "6994594", "t": "Malta", "off": false, "del": 156, "tar": 77.0, "tcr": 96.0, "dph": 1.77, "ts": 212, "oh": 88.4, "ot": 41.3, "ih": 47.1, "e": 599.18, "tip": 18.27, "bon": null, "adj": 9.8, "ut": 46.7, "eph": 6.78, "cpo": 3.84, "a": true}, {"n": "Narinder Kumar EZ M", "v": "Motorcycle", "id": "6994595", "t": "Malta", "off": false, "del": 274, "tar": 73.0, "tcr": 94.0, "dph": 1.13, "ts": 404, "oh": 243.5, "ot": 68.7, "ih": 174.8, "e": 950.2, "tip": 27.11, "bon": 7.0, "adj": 0.97, "ut": 28.2, "eph": 3.9, "cpo": 3.47, "a": true}, {"n": "Anurudha SARKAR EZ M", "v": "Motorcycle", "id": "6994596", "t": "Malta", "off": false, "del": 348, "tar": 91.0, "tcr": 99.0, "dph": 2.43, "ts": 385, "oh": 143.4, "ot": 90.0, "ih": 53.5, "e": 1336.23, "tip": 63.09, "bon": 14.0, "adj": 8.5, "ut": 62.7, "eph": 9.31, "cpo": 3.84, "a": true}, {"n": "Sandeep Kumar EZ M", "v": "Motorcycle", "id": "7096889", "t": "Malta", "off": false, "del": 59, "tar": 49.0, "tcr": 89.0, "dph": 2.07, "ts": 133, "oh": 28.5, "ot": 13.6, "ih": 14.9, "e": 184.92, "tip": 7.0, "bon": null, "adj": null, "ut": 47.6, "eph": 6.48, "cpo": 3.13, "a": true}, {"n": "Chandan Choudhry EZ M", "v": "Motorcycle", "id": "7096891", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Ayub Bin Ali BAHASHWAN EZ M OFB", "v": "Motorcycle", "id": "7104990", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "MdHabibur Rahman EZ M", "v": "Motorcycle", "id": "7112594", "t": "Malta", "off": false, "del": 451, "tar": 70.0, "tcr": 96.0, "dph": 2.25, "ts": 670, "oh": null, "ot": 121.2, "ih": 78.8, "e": 1731.79, "tip": 32.0, "bon": null, "adj": 33.65, "ut": null, "eph": null, "cpo": 3.84, "a": false}, {"n": "Sandeep Murarishetty", "v": "Motorcycle", "id": "7160147", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Majid HUSSAIN EZ M", "v": "Motorcycle", "id": "7160388", "t": "Malta", "off": false, "del": 308, "tar": 67.0, "tcr": 94.0, "dph": 2.08, "ts": 492, "oh": 148.1, "ot": 79.7, "ih": 68.4, "e": 1141.71, "tip": 46.14, "bon": null, "adj": null, "ut": 53.8, "eph": 7.71, "cpo": 3.71, "a": true}, {"n": "Lokesh KHADKA EZ M", "v": "Motorcycle", "id": "7160397", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Mohammed Abdul Jahangir EZ M", "v": "Motorcycle", "id": "7177525", "t": "Malta", "off": false, "del": 53, "tar": 65.0, "tcr": 93.0, "dph": 1.85, "ts": 88, "oh": 28.6, "ot": 14.5, "ih": 14.2, "e": 168.18, "tip": 3.0, "bon": null, "adj": null, "ut": 50.6, "eph": 5.87, "cpo": 3.17, "a": true}, {"n": "Sujan Akon EZ M", "v": "Car", "id": "7214539", "t": "Malta", "off": false, "del": 48, "tar": 64.0, "tcr": 89.0, "dph": 1.68, "ts": 85, "oh": 28.6, "ot": 16.5, "ih": 12.2, "e": 188.52, "tip": 5.0, "bon": null, "adj": 1.5, "ut": 57.5, "eph": 6.58, "cpo": 3.93, "a": true}, {"n": "Fahad SHAIK ΕΖ Μ", "v": "Motorcycle", "id": "7214545", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sanjeewa Kumar", "v": "Motorcycle", "id": "7299358", "t": "Malta", "off": false, "del": 264, "tar": 89.0, "tcr": 98.0, "dph": 2.84, "ts": 303, "oh": 93.0, "ot": 62.7, "ih": 30.3, "e": 920.11, "tip": 39.34, "bon": 7.0, "adj": 4.0, "ut": 67.4, "eph": 9.89, "cpo": 3.49, "a": true}, {"n": "Sahil", "v": "Motorcycle", "id": "7299359", "t": "Malta", "off": false, "del": 298, "tar": 75.0, "tcr": 96.0, "dph": 1.93, "ts": 413, "oh": 154.4, "ot": 68.5, "ih": 85.9, "e": 1026.07, "tip": 42.0, "bon": 8.0, "adj": 3.0, "ut": 44.4, "eph": 6.65, "cpo": 3.44, "a": true}, {"n": "Dharma Datta SHARMA EZ M", "v": "Motorcycle", "id": "7299360", "t": "Malta", "off": false, "del": 135, "tar": 58.0, "tcr": 91.0, "dph": 1.41, "ts": 260, "oh": 95.8, "ot": 33.5, "ih": 62.3, "e": 438.34, "tip": 20.5, "bon": null, "adj": null, "ut": 35.0, "eph": 4.57, "cpo": 3.25, "a": true}, {"n": "Prameshor Shrestha EZ M", "v": "Car", "id": "7312495", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Rohit Humagain EZ M", "v": "Motorcycle", "id": "7464459", "t": "Malta", "off": false, "del": 294, "tar": 79.0, "tcr": 91.0, "dph": 2.12, "ts": 409, "oh": 138.9, "ot": 85.7, "ih": 53.2, "e": 1052.77, "tip": 23.92, "bon": 8.0, "adj": 9.2, "ut": 61.7, "eph": 7.58, "cpo": 3.58, "a": true}, {"n": "Madan Shah EZ M", "v": "Motorcycle", "id": "7530202", "t": "Malta", "off": false, "del": 54, "tar": 97.0, "tcr": 90.0, "dph": 2.37, "ts": 62, "oh": 22.8, "ot": 14.6, "ih": 8.2, "e": 177.09, "tip": 4.0, "bon": null, "adj": null, "ut": 63.9, "eph": 7.76, "cpo": 3.28, "a": true}]}, {"name": "Ferrugia", "key": "ferrugia", "couriers": [{"n": "nawaz Muhammad shahid", "v": "Motorcycle", "id": "119714", "t": "Malta", "off": false, "del": 267, "tar": 81.0, "tcr": 96.0, "dph": 2.8, "ts": 341, "oh": 95.4, "ot": 66.0, "ih": 29.4, "e": 1005.96, "tip": 36.99, "bon": 8.0, "adj": 3.5, "ut": 69.2, "eph": 10.55, "cpo": 3.77, "a": true}, {"n": "Paul Vincent Beringa", "v": "Car", "id": "5412644", "t": "Malta", "off": false, "del": 60, "tar": 91.0, "tcr": 98.0, "dph": 2.01, "ts": 67, "oh": 29.9, "ot": 19.8, "ih": 10.1, "e": 227.23, "tip": 16.95, "bon": null, "adj": 1.3, "ut": 66.3, "eph": 7.6, "cpo": 3.79, "a": true}, {"n": "Massimo MeliCT", "v": "Motorcycle", "id": "6348859", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sancha Man Lama FER M$ OFB", "v": "Motorcycle", "id": "6642336", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Harka Bahadur Tamang FER M$ OFB", "v": "Motorcycle", "id": "6642339", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sabin Manandhar FER M", "v": "Motorcycle", "id": "6642340", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Haris Muhammad FER M", "v": "Motorcycle", "id": "6642341", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Francesco Spampinato FER M", "v": "Motorcycle", "id": "6642342", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Govinda Ghimire FER M", "v": "Motorcycle", "id": "6642343", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sreekar Goud Sammeta FER M", "v": "Motorcycle", "id": "6642354", "t": "Malta", "off": false, "del": 181, "tar": 45.0, "tcr": 95.0, "dph": 1.85, "ts": 425, "oh": 97.9, "ot": 60.2, "ih": 37.7, "e": 623.52, "tip": 37.99, "bon": null, "adj": null, "ut": 61.5, "eph": 6.37, "cpo": 3.44, "a": true}, {"n": "Sunil Bhattrai FER M", "v": "Motorcycle", "id": "6642772", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Satheesh Soman", "v": "Motorcycle", "id": "6666305", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Abhishek Devkota FER M", "v": "Motorcycle", "id": "6666306", "t": "Malta", "off": false, "del": 170, "tar": 25.0, "tcr": 92.0, "dph": 1.07, "ts": 744, "oh": 158.4, "ot": 42.4, "ih": 116.0, "e": 621.82, "tip": 24.48, "bon": null, "adj": null, "ut": 26.8, "eph": 3.92, "cpo": 3.66, "a": true}, {"n": "Bikram Poudel FER M", "v": "Car", "id": "6666307", "t": "Malta", "off": false, "del": 191, "tar": 60.0, "tcr": 92.0, "dph": 1.09, "ts": 352, "oh": 174.7, "ot": 64.1, "ih": 110.6, "e": 776.25, "tip": 31.56, "bon": null, "adj": 9.6, "ut": 36.7, "eph": 4.44, "cpo": 4.06, "a": true}, {"n": "mohammed akbar", "v": "Motorcycle", "id": "6707058", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Bishal Karki Thapa FER M", "v": "Motorcycle", "id": "6859790", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Sagar LAMICHHANE FER M SPRT OFF", "v": "Motorcycle", "id": "6981803", "t": "Malta", "off": false, "del": 220, "tar": 36.0, "tcr": 92.0, "dph": 1.19, "ts": 663, "oh": 184.7, "ot": 56.0, "ih": 128.7, "e": 896.08, "tip": 30.0, "bon": null, "adj": 200.0, "ut": 30.3, "eph": 4.85, "cpo": 4.07, "a": true}, {"n": "Luke Woodend OFB", "v": "Car", "id": "6994598", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Vanessa Felici FER M", "v": "Car", "id": "6994603", "t": "Malta", "off": true, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": null, "ot": null, "ih": null, "e": null, "tip": null, "bon": null, "adj": null, "ut": null, "eph": null, "cpo": null, "a": false}, {"n": "Nabin DHAKAL FER M", "v": "Car", "id": "7299361", "t": "Malta", "off": false, "del": 127, "tar": 93.0, "tcr": 100.0, "dph": 1.81, "ts": 137, "oh": 70.3, "ot": 46.5, "ih": 23.8, "e": 484.59, "tip": 21.0, "bon": null, "adj": null, "ut": 66.2, "eph": 6.89, "cpo": 3.82, "a": true}, {"n": "Md Jewel Hossain", "v": "Motorcycle", "id": "7326955", "t": "Malta", "off": false, "del": 10, "tar": 59.0, "tcr": 100.0, "dph": 3.02, "ts": 17, "oh": 3.3, "ot": 1.7, "ih": 1.6, "e": 31.13, "tip": 2.0, "bon": null, "adj": null, "ut": 52.3, "eph": 9.39, "cpo": 3.11, "a": true}, {"n": "Jit Bahadur Karki FER M", "v": "Car", "id": "7464464", "t": "Malta", "off": false, "del": 78, "tar": 62.0, "tcr": 95.0, "dph": 1.94, "ts": 132, "oh": 40.3, "ot": 22.9, "ih": 17.4, "e": 295.78, "tip": 13.0, "bon": null, "adj": null, "ut": 56.8, "eph": 7.35, "cpo": 3.79, "a": true}, {"n": "Ahmad Mohamadhanif Memon", "v": "Car", "id": "7464481", "t": "Malta", "off": false, "del": 406, "tar": 93.0, "tcr": 99.0, "dph": 2.33, "ts": 439, "oh": 174.3, "ot": 124.0, "ih": 50.3, "e": 1484.22, "tip": 60.0, "bon": null, "adj": 14.02, "ut": 71.1, "eph": 8.52, "cpo": 3.66, "a": true}, {"n": "Dhanesh Gurung", "v": "Motorcycle", "id": "7474200", "t": "Malta", "off": false, "del": 304, "tar": 73.0, "tcr": 94.0, "dph": 1.35, "ts": 442, "oh": 225.3, "ot": 84.0, "ih": 141.3, "e": 1343.55, "tip": 35.0, "bon": 7.0, "adj": 178.55, "ut": 37.3, "eph": 5.96, "cpo": 4.42, "a": true}, {"n": "Robin Ninan Varghese FER M", "v": "Motorcycle", "id": "7508408", "t": "Malta", "off": false, "del": null, "tar": null, "tcr": null, "dph": null, "ts": null, "oh": 0.1, "ot": null, "ih": null, "e": -100.0, "tip": null, "bon": null, "adj": -100.0, "ut": null, "eph": -1200.0, "cpo": null, "a": false}, {"n": "suraj shrestha", "v": "Car", "id": "7516058", "t": "Malta", "off": false, "del": 76, "tar": 92.0, "tcr": 99.0, "dph": 1.26, "ts": 85, "oh": 60.1, "ot": 36.2, "ih": 23.9, "e": 289.71, "tip": 14.0, "bon": null, "adj": null, "ut": 60.2, "eph": 4.82, "cpo": 3.81, "a": true}]}];
+
+const WA_ORDERS = [
+  {date:"2026-05-08",time:"18:14",platform:"Bolt",earnings:6.44,distKm:12.8,estMin:22,ePerKm:0.50,restaurant:"Jum L-Omm / Wolt Market SGw",addon:false},
+  {date:"2026-05-08",time:"18:07",platform:"Bolt",earnings:6.06,distKm:8.2,estMin:13,ePerKm:0.74,restaurant:"Detroit Style St Julian's",addon:true},
+  {date:"2026-05-08",time:"18:02",platform:"Wolt",earnings:1.20,distKm:0.3,estMin:2,ePerKm:4.00,restaurant:"daves Food Store Zabbar",addon:false},
+  {date:"2026-05-07",time:"22:27",platform:"Wolt",earnings:17.52,distKm:24.7,estMin:37,ePerKm:0.71,restaurant:"CFC Paceville + The Trap",addon:false},
+  {date:"2026-05-07",time:"19:41",platform:"Wolt",earnings:8.56,distKm:5.4,estMin:14,ePerKm:1.59,restaurant:"WD daves Haz-Zebbug",addon:false},
+  {date:"2026-05-07",time:"17:44",platform:"Bolt",earnings:9.48,distKm:17.6,estMin:21,ePerKm:0.54,restaurant:"Fuel & Co. Birkirkara",addon:false},
+  {date:"2026-05-07",time:"17:37",platform:"Bolt",earnings:12.52,distKm:21.8,estMin:26,ePerKm:0.57,restaurant:"Papajoe's",addon:false},
+  {date:"2026-05-07",time:"13:15",platform:"Wolt",earnings:2.36,distKm:1.5,estMin:10,ePerKm:1.57,restaurant:"Rocky's Ftira SGBay",addon:true},
+  {date:"2026-05-07",time:"13:15",platform:"Wolt",earnings:1.38,distKm:1.0,estMin:5,ePerKm:1.38,restaurant:"eeetwell Ibrag",addon:true},
+  {date:"2026-05-07",time:"13:15",platform:"Wolt",earnings:1.90,distKm:1.2,estMin:5,ePerKm:1.58,restaurant:"Wolt Market SGw",addon:true},
+  {date:"2026-05-06",time:"19:58",platform:"Bolt",earnings:5.06,distKm:10.7,estMin:21,ePerKm:0.47,restaurant:"Wasabi Sushi Sliema",addon:false},
+  {date:"2026-05-06",time:"14:41",platform:"Bolt",earnings:9.20,distKm:16.2,estMin:22,ePerKm:0.57,restaurant:"London Butcher Mosta",addon:false},
+  {date:"2026-05-05",time:"19:11",platform:"Wolt",earnings:13.96,distKm:19.2,estMin:25,ePerKm:0.73,restaurant:"Bella Ciao",addon:false},
+  {date:"2026-05-05",time:"17:11",platform:"Wolt",earnings:4.82,distKm:10.6,estMin:16,ePerKm:0.45,restaurant:"Marie Boutique Patisserie",addon:false},
+  {date:"2026-05-05",time:"15:37",platform:"Bolt",earnings:12.31,distKm:18.8,estMin:20,ePerKm:0.65,restaurant:"Little Stars",addon:false},
+  {date:"2026-05-05",time:"10:38",platform:"Bolt",earnings:2.86,distKm:1.8,estMin:8,ePerKm:1.59,restaurant:"Snack Bar by Jeff's",addon:true},
+  {date:"2026-05-05",time:"08:51",platform:"Wolt",earnings:2.49,distKm:6.6,estMin:13,ePerKm:0.38,restaurant:"Beauty Factory",addon:false},
+  {date:"2026-05-05",time:"08:38",platform:"Bolt",earnings:1.96,distKm:4.8,estMin:7,ePerKm:0.41,restaurant:"Meats and Eats Naxxar",addon:false},
+];
+
+const WA_RATES = [
+  {date:"2026-05-09",rate:"€2.20",dist:"3 km",ePerKm:"€0.73",src:"Road Update",ctx:"3km delivery, 80€ order value — courier outraged at low pay vs order value"},
+  {date:"2026-05-05",rate:"€100/day",dist:"150 km",ePerKm:"€0.67",src:"Petition",ctx:"Daily total: 150km to make €100, €10 fuel, 40% fleet cut → ~€54 net"},
+  {date:"2026-05-04",rate:"€2",dist:"7 km",ePerKm:"€0.29",src:"Petition",ctx:"\"take the order of 2 Euro and deliver 7km\""},
+  {date:"2026-04-29",rate:"Rate cut",dist:"—",ePerKm:"—",src:"Petition",ctx:"Reported rate decrease same day as \"system update\""},
+  {date:"2026-04-24",rate:"€1.53",dist:"5.8 km actual (shown 0.7)",ePerKm:"€0.26",src:"Petition",ctx:"Distance manipulation complaint — 8x discrepancy"},
+  {date:"2026-04-22",rate:"€3.22",dist:"10 km",ePerKm:"€0.32",src:"Petition",ctx:"\"10km Ka 3.22 euro de rha h\""},
+  {date:"2026-04-21",rate:"€5",dist:"10 km",ePerKm:"€0.50",src:"Petition",ctx:"\"Now they are giving 10km 5 euro\""},
+  {date:"2026-04-14",rate:"€3",dist:"10 km",ePerKm:"€0.30",src:"Petition",ctx:"\"10km and 3€ it's not fair\""},
+  {date:"2026-04-14",rate:"€32 session",dist:"58 km",ePerKm:"€0.55",src:"Petition",ctx:"Aggregate session screenshot"},
+  {date:"2026-03-28",rate:"€0.77/order net",dist:"—",ePerKm:"—",src:"Petition",ctx:"Net per delivery before fleet commission"},
+  {date:"2026-03-11",rate:"€2.89",dist:"6 km",ePerKm:"€0.48",src:"Road Update",ctx:"\"For fucking 6 km just 2.89\""},
+  {date:"2026-02-15",rate:"€3.85",dist:"~10 km",ePerKm:"€0.39",src:"Road Update",ctx:"\"they are paying 3.85€ for 10km approx\""},
+];
+
+const WA_BONUSES = [
+  {date:"2026-05-09",platform:"Wolt",type:"+40% per order",window:"08:30–10:30"},
+  {date:"2026-05-08",platform:"Wolt",type:"€7 for 7 pickups",window:"18:30–21:30"},
+  {date:"2026-03-13",platform:"Wolt",type:"Saturday 60% bonus REMOVED",window:"Sat evening"},
+];
+
+const WA_FLEET_COSTS = [
+  {item:"Fleet revenue share",amount:"~40–50%",notes:"WT Global, Ezee, others"},
+  {item:"Bike fleet rental",amount:"€400–450/month",notes:"Standard motorbike"},
+  {item:"MannaEV electric",amount:"€100/week + €70/mo battery",notes:"Electric fleet"},
+  {item:"Wolt bag",amount:"€150 one-time",notes:"Deducted from earnings"},
+  {item:"Fuel (motorbike)",amount:"~€10/day at 150 km",notes:"Self-reported"},
+];
+
+const WA_SENTIMENT = [
+  {theme:"Earnings declining",detail:"Consistent complaints about rate decreases from Feb→May. Feb ~€0.39/km, Apr €0.30-0.50/km. Most recent: €0.29/km for 7km order."},
+  {theme:"Rejection as leverage",detail:"Wolt policy: 5 rejected orders = 1hr offline. Couriers discuss coordinating to reject low-pay orders but struggle to unify."},
+  {theme:"Distance manipulation",detail:"At least one documented case of 0.7km shown vs 5.8km actual route. Recurring complaint."},
+  {theme:"Multi-apping is the norm",detail:"Couriers run Bolt + Wolt simultaneously. Prefer Bolt for long-distance (higher €/km). Cherry-pick Wolt for short add-ons."},
+  {theme:"Fleet commission resentment",detail:"40-50% fleet take + rental + fuel means couriers keep ~€0.20-0.35/km net. Earns less than dishwashers per self-reports."},
+  {theme:"Strike talk, no action",detail:"Periodic strike discussions (especially around rate cuts) but consistently fail to mobilise. \"Noone agree for strike\""},
+  {theme:"Fake accounts / JobPlus checks",detail:"300+ fake Wolt accounts discovered. Regular JobPlus enforcement checks at Wolt Market locations. Couriers warn each other."},
+];
+
+// ---- Render ----
+let activeTab = FLEETS[0]?.key || 'whatsapp';
+let tarThreshold = 60;
+
+function init() {
+  const tabNames = [];
+  FLEETS.forEach(f => tabNames.push({key:f.key,label:f.name}));
+  tabNames.push({key:'whatsapp',label:'WhatsApp Intel'});
+  tabNames.push({key:'upload',label:'+ Add Fleet'});
+
+  document.getElementById('mainTabs').innerHTML = tabNames.map(t =>
+    `<div class="tab ${t.key===activeTab?'on':''}" onclick="switchTab('${t.key}')">${t.label}</div>`
+  ).join('');
+
+  rebuild();
+}
+
+function renderCompare() { return ''; }
+
+function switchTab(key) {
+  activeTab = key;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.textContent.trim() === getTabLabel(key)));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'pane-'+key));
+}
+
+function getTabLabel(key) {
+  if (key === 'whatsapp') return 'WhatsApp Intel';
+  if (key === 'upload') return '+ Add Fleet';
+  const f = FLEETS.find(x => x.key === key);
+  return f ? f.name : key;
+}
+
+function agg(couriers) {
+  const act = couriers.filter(c => c.a);
+  const del = act.reduce((s,c) => s+(c.del||0), 0);
+  const oh = act.reduce((s,c) => s+(c.oh||0), 0);
+  const ot = act.reduce((s,c) => s+(c.ot||0), 0);
+  const earned = act.reduce((s,c) => s+(c.e||0), 0);
+  const tips = act.reduce((s,c) => s+(c.tip||0), 0);
+  const ht = act.filter(c => c.tar!=null && c.tar>=tarThreshold);
+  const htDel = ht.reduce((s,c) => s+(c.del||0), 0);
+  const htOh = ht.reduce((s,c) => s+(c.oh||0), 0);
+  const htOt = ht.reduce((s,c) => s+(c.ot||0), 0);
+  const htE = ht.reduce((s,c) => s+(c.e||0), 0);
+  return {
+    total: couriers.length, active: act.length, inactive: couriers.length - act.length,
+    offline: couriers.filter(c=>c.off).length,
+    del, oh:Math.round(oh*10)/10, ot:Math.round(ot*10)/10, earned:Math.round(earned),
+    tips: Math.round(tips),
+    ut: oh>0 ? Math.round(ot/oh*1000)/10 : 0,
+    dph: oh>0 ? Math.round(del/oh*100)/100 : 0,
+    eph: oh>0 ? Math.round(earned/oh*100)/100 : 0,
+    cpo: del>0 ? Math.round(earned/del*100)/100 : 0,
+    htCount: ht.length, htDel, htOh: Math.round(htOh*10)/10,
+    htUt: htOh>0 ? Math.round(htOt/htOh*1000)/10 : 0,
+    htDph: htOh>0 ? Math.round(htDel/htOh*100)/100 : 0,
+    htEph: htOh>0 ? Math.round(htE/htOh*100)/100 : 0,
+    htCpo: htDel>0 ? Math.round(htE/htDel*100)/100 : 0,
+  };
+}
+
+function onTarChange(val) {
+  tarThreshold = parseInt(val);
+  rebuild();
+}
+
+function rebuild() {
+  let html = '';
+  html += renderCompare();
+  FLEETS.forEach(f => { html += renderFleet(f); });
+  html += renderWhatsApp();
+  html += renderUpload();
+  document.getElementById('panes').innerHTML = html;
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'pane-'+activeTab));
+  document.querySelectorAll('.tar-slider').forEach(el => el.value = tarThreshold);
+  document.querySelectorAll('.tar-val').forEach(el => el.textContent = tarThreshold + '%');
+}
+
+
+function renderFleet(fleet) {
+  const a = agg(fleet.couriers);
+  const act = fleet.couriers.filter(c=>c.a);
+  const utC = a.ut < 55 ? 'yl' : 'gn';
+
+  // TAR buckets
+  const tarB = [{l:'<50%',mn:0,mx:50,c:0},{l:'50-59%',mn:50,mx:60,c:0},{l:'60-69%',mn:60,mx:70,c:0},
+                {l:'70-79%',mn:70,mx:80,c:0},{l:'80-89%',mn:80,mx:90,c:0},{l:'90%+',mn:90,mx:101,c:0}];
+  const utB = [{l:'<30%',mn:0,mx:30,c:0},{l:'30-39%',mn:30,mx:40,c:0},{l:'40-49%',mn:40,mx:50,c:0},
+               {l:'50-59%',mn:50,mx:60,c:0},{l:'60-69%',mn:60,mx:70,c:0},{l:'70%+',mn:70,mx:200,c:0}];
+  act.forEach(c => {
+    if(c.tar!=null) { const b=tarB.find(x=>c.tar>=x.mn&&c.tar<x.mx); if(b) b.c++; }
+    if(c.ut!=null) { const b=utB.find(x=>c.ut>=x.mn&&c.ut<x.mx); if(b) b.c++; }
+  });
+  const maxT = Math.max(...tarB.map(b=>b.c),1);
+  const maxU = Math.max(...utB.map(b=>b.c),1);
+
+  // Vehicle mix
+  const veh = {};
+  act.forEach(c => { const v=c.v||'Unknown'; if(!veh[v])veh[v]={c:0,d:0,oh:0}; veh[v].c++; veh[v].d+=(c.del||0); veh[v].oh+=(c.oh||0); });
+
+  let h = `<div class="pane" id="pane-${fleet.key}">`;
+
+  // Summary
+  h += `<div class="sect"><h2>${fleet.name} — Fleet Summary</h2>`;
+  h += `<div class="subt">${a.total} on roster · ${a.active} active · ${a.inactive} inactive · ${a.offline} set offline</div>`;
+  h += `<div class="sg">
+    <div class="sc"><div class="lb">Deliveries</div><div class="vl">${a.del.toLocaleString()}</div></div>
+    <div class="sc"><div class="lb">Online Hours</div><div class="vl">${Math.round(a.oh).toLocaleString()}h</div></div>
+    <div class="sc ${utC}"><div class="lb">UT%</div><div class="vl">${a.ut}%</div></div>
+    <div class="sc"><div class="lb">DPH</div><div class="vl">${a.dph}</div></div>
+    <div class="sc"><div class="lb">Earned</div><div class="vl">€${a.earned.toLocaleString()}</div></div>
+    <div class="sc"><div class="lb">EPH</div><div class="vl">€${a.eph}</div></div>
+    <div class="sc"><div class="lb">CPO</div><div class="vl">€${a.cpo}</div></div>
+    <div class="sc"><div class="lb">Tips</div><div class="vl">€${a.tips.toLocaleString()}</div></div>
+  </div></div>`;
+
+  // Quality segment
+  h += `<div class="sect"><h2>Quality Segment (TAR ≥ <span class="tar-val">${tarThreshold}%</span>)</h2>`;
+  h += `<div class="subt">${a.htCount} couriers · ${a.htDel.toLocaleString()} deliveries (${a.del>0?Math.round(a.htDel/a.del*100):0}% of fleet)</div>`;
+  h += `<div class="sg">
+    <div class="sc gn"><div class="lb">UT%</div><div class="vl">${a.htUt}%</div></div>
+    <div class="sc gn"><div class="lb">DPH</div><div class="vl">${a.htDph}</div></div>
+    <div class="sc gn"><div class="lb">EPH</div><div class="vl">€${a.htEph}</div></div>
+    <div class="sc gn"><div class="lb">CPO</div><div class="vl">€${a.htCpo}</div></div>
+  </div></div>`;
+
+  // Distributions
+  h += `<div class="sect"><h2>Distributions</h2><div class="dg"><div>`;
+  h += `<h3>TAR (Task Acceptance Rate)</h3>`;
+  tarB.forEach(b => {
+    const w = Math.max(b.c/maxT*100, b.c>0?8:0);
+    h += `<div class="br"><span class="bl">${b.l}</span><div class="bt"><div class="bf a" style="width:${w}%">${b.c}</div></div></div>`;
+  });
+  h += `</div><div><h3>Utilisation %</h3>`;
+  utB.forEach(b => {
+    const w = Math.max(b.c/maxU*100, b.c>0?8:0);
+    h += `<div class="br"><span class="bl">${b.l}</span><div class="bt"><div class="bf g" style="width:${w}%">${b.c}</div></div></div>`;
+  });
+  h += `</div></div></div>`;
+
+  // Vehicle mix
+  const vKeys = Object.keys(veh).sort((a,b)=>veh[b].d-veh[a].d);
+  if(vKeys.length>0) {
+    h += `<div class="sect"><h2>Vehicle Mix</h2><table><thead><tr><th>Vehicle</th><th class="n">Couriers</th><th class="n">Deliveries</th><th class="n">OH</th><th class="n">DPH</th></tr></thead><tbody>`;
+    vKeys.forEach(v => {
+      const d=veh[v]; h+=`<tr><td>${v}</td><td class="n">${d.c}</td><td class="n">${d.d.toLocaleString()}</td><td class="n">${Math.round(d.oh)}h</td><td class="n">${d.oh>0?(d.d/d.oh).toFixed(2):'-'}</td></tr>`;
+    });
+    h += `</tbody></table></div>`;
+  }
+
+  // Courier table
+  const sorted = [...act].sort((a,b)=>(b.del||0)-(a.del||0));
+  h += `<div class="sect"><h2>All Active Couriers</h2><div class="subt">${act.length} couriers. Sorted by deliveries.</div>`;
+  h += `<div style="overflow-x:auto"><table><thead><tr><th>Courier</th><th>Veh</th><th class="n">Del</th><th class="n">TAR</th><th class="n">TCR</th><th class="n">DPH</th><th class="n">OH</th><th class="n">OT</th><th class="n">UT%</th><th class="n">Earned</th><th class="n">EPH</th><th class="n">CPO</th><th class="n">Tips</th></tr></thead><tbody>`;
+  sorted.forEach(c => {
+    const tc = c.tar==null?'dm':c.tar>=80?'gd':c.tar>=60?'':'bd';
+    const uc = c.ut==null?'dm':c.ut>=60?'gd':c.ut>=45?'':'bd';
+    h += `<tr><td>${c.n}</td><td class="dm">${c.v}</td><td class="n">${(c.del||0).toLocaleString()}</td>`;
+    h += `<td class="n ${tc}">${c.tar!=null?c.tar+'%':'-'}</td>`;
+    h += `<td class="n">${c.tcr!=null?c.tcr+'%':'-'}</td>`;
+    h += `<td class="n">${c.dph!=null?c.dph.toFixed(2):'-'}</td>`;
+    h += `<td class="n">${c.oh!=null?c.oh+'h':'-'}</td>`;
+    h += `<td class="n">${c.ot!=null?c.ot+'h':'-'}</td>`;
+    h += `<td class="n ${uc}">${c.ut!=null?c.ut+'%':'-'}</td>`;
+    h += `<td class="n">${c.e!=null?'€'+c.e.toFixed(2):'-'}</td>`;
+    h += `<td class="n">${c.eph!=null?'€'+c.eph.toFixed(2):'-'}</td>`;
+    h += `<td class="n">${c.cpo!=null?'€'+c.cpo.toFixed(2):'-'}</td>`;
+    h += `<td class="n dm">${c.tip!=null?'€'+c.tip.toFixed(2):'-'}</td></tr>`;
+  });
+  h += `</tbody></table></div></div>`;
+  h += `</div>`;
+  return h;
+}
+
+function renderWhatsApp() {
+  let h = `<div class="pane" id="pane-whatsapp">`;
+  h += `<div class="sect"><h2>WhatsApp Ground Intel — Courier Earnings</h2>`;
+  h += `<div class="subt">From "Bolt & Wolt Malta {Road Update Only}" + "Wolt courier petition ✊" · Last refresh: May 11, 2026</div>`;
+  h += `<div class="co">This data comes directly from couriers sharing screenshots and complaints. It shows <b>what couriers are actually offered per delivery</b> — complementing the fleet CSV data which shows aggregate earnings.</div>`;
+  h += `</div>`;
+
+  // Screenshot orders
+  const std = WA_ORDERS.filter(o=>!o.addon);
+  const addons = WA_ORDERS.filter(o=>o.addon);
+  const boltStd = std.filter(o=>o.platform==='Bolt');
+  const woltStd = std.filter(o=>o.platform==='Wolt');
+
+  h += `<div class="sect"><h2>Order-Level Data (Screenshots, May 5–8)</h2>`;
+  h += `<div class="subt">${std.length} standard orders + ${addons.length} add-ons from courier screenshots</div>`;
+
+  // Platform comparison stats
+  const median = arr => { const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; };
+  const bE = boltStd.map(o=>o.earnings), wE = woltStd.map(o=>o.earnings);
+  const bK = boltStd.map(o=>o.ePerKm), wK = woltStd.map(o=>o.ePerKm);
+  const bD = boltStd.map(o=>o.distKm), wD = woltStd.map(o=>o.distKm);
+
+  h += `<div class="sg">
+    <div class="sc"><div class="lb">Bolt median €/order</div><div class="vl">€${median(bE).toFixed(2)}</div><div class="sub">n=${boltStd.length}</div></div>
+    <div class="sc"><div class="lb">Wolt median €/order</div><div class="vl">€${median(wE).toFixed(2)}</div><div class="sub">n=${woltStd.length}</div></div>
+    <div class="sc"><div class="lb">Bolt median €/km</div><div class="vl">€${median(bK).toFixed(2)}</div></div>
+    <div class="sc"><div class="lb">Wolt median €/km</div><div class="vl">€${median(wK).toFixed(2)}</div></div>
+    <div class="sc"><div class="lb">Bolt median dist</div><div class="vl">${median(bD).toFixed(1)}km</div></div>
+    <div class="sc"><div class="lb">Wolt median dist</div><div class="vl">${median(wD).toFixed(1)}km</div></div>
+  </div>`;
+
+  h += `<table><thead><tr><th>Date</th><th>Platform</th><th class="n">€</th><th class="n">km</th><th class="n">€/km</th><th class="n">Est min</th><th>Restaurant</th></tr></thead><tbody>`;
+  std.forEach(o => {
+    const cls = o.ePerKm < 0.45 ? 'bd' : o.ePerKm >= 0.70 ? 'gd' : '';
+    h += `<tr><td class="dm">${o.date}</td><td><span class="pill ${o.platform.toLowerCase()}">${o.platform}</span></td><td class="n">€${o.earnings.toFixed(2)}</td><td class="n">${o.distKm}km</td><td class="n ${cls}">€${o.ePerKm.toFixed(2)}</td><td class="n">${o.estMin}m</td><td class="dm">${o.restaurant}</td></tr>`;
+  });
+  h += `</tbody></table></div>`;
+
+  // Reported rates timeline
+  h += `<div class="sect"><h2>Reported Rates Timeline (Feb–May 2026)</h2>`;
+  h += `<div class="subt">Text messages where couriers explicitly mention pay rates and distances</div>`;
+  h += `<table><thead><tr><th>Date</th><th>Rate</th><th>Distance</th><th class="n">€/km</th><th>Source</th><th>Context</th></tr></thead><tbody>`;
+  WA_RATES.forEach(r => {
+    h += `<tr><td>${r.date}</td><td>${r.rate}</td><td>${r.dist}</td><td class="n">${r.ePerKm}</td><td class="dm">${r.src}</td><td class="dm">${r.ctx}</td></tr>`;
+  });
+  h += `</tbody></table></div>`;
+
+  // Bonuses
+  h += `<div class="sect"><h2>Bonus / Incentive Tracking</h2>`;
+  h += `<table><thead><tr><th>Date</th><th>Platform</th><th>Type</th><th>Window</th></tr></thead><tbody>`;
+  WA_BONUSES.forEach(b => {
+    h += `<tr><td>${b.date}</td><td><span class="pill ${b.platform.toLowerCase()}">${b.platform}</span></td><td>${b.type}</td><td>${b.window}</td></tr>`;
+  });
+  h += `</tbody></table></div>`;
+
+  // Fleet costs
+  h += `<div class="sect"><h2>Fleet Costs (Courier-Reported)</h2>`;
+  h += `<div class="subt">Deducted from gross earnings before courier net pay</div>`;
+  h += `<table><thead><tr><th>Item</th><th>Amount</th><th>Notes</th></tr></thead><tbody>`;
+  WA_FLEET_COSTS.forEach(c => {
+    h += `<tr><td>${c.item}</td><td>${c.amount}</td><td class="dm">${c.notes}</td></tr>`;
+  });
+  h += `</tbody></table></div>`;
+
+  // Sentiment
+  h += `<div class="sect"><h2>Courier Sentiment Themes</h2>`;
+  h += `<div class="subt">Recurring themes from ~9,000 messages across both groups</div>`;
+  h += `<div class="ic">`;
+  WA_SENTIMENT.forEach(s => {
+    h += `<div class="icd"><h3>${s.theme}</h3><p>${s.detail}</p></div>`;
+  });
+  h += `</div></div>`;
+
+  h += `</div>`;
+  return h;
+}
+
+function renderUpload() {
+  return `<div class="pane" id="pane-upload">
+    <div class="upload-zone">
+      <h3>Add New Fleet Data</h3>
+      <p>This tab lets you preview a new fleet before it gets baked into the dashboard. For permanent updates, re-run the dashboard generator with the new CSVs.</p>
+      <div class="ur">
+        <div class="uf"><label>Fleet name</label><input type="text" id="uf_name" placeholder="e.g. NewFleet Jun 1"></div>
+        <div class="uf"><label>Performance CSV</label><input type="file" id="uf_perf" accept=".csv"></div>
+        <div class="uf"><label>Financials CSV</label><input type="file" id="uf_fin" accept=".csv"></div>
+        <button class="btn" onclick="previewFleet()">Preview</button>
+      </div>
+    </div>
+    <div id="uf_preview"></div>
+  </div>`;
+}
+
+init();
+</script>
+</body>
+</html>
