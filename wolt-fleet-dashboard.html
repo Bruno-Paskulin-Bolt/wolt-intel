@@ -70,7 +70,7 @@ tbody tr:hover{background:var(--s2)}
 <div class="ctn">
 <header>
 <h1>Wolt Fleet Intelligence — Malta</h1>
-<span class="meta">Data window: Apr 11 – May 11, 2026 (30 days) · Last updated: May 11, 2026</span>
+<span class="meta">Data window: Apr 11 – May 11, 2026 (30 days) · Last updated: May 15, 2026</span>
 </header>
 <div style="font-size:11px;color:var(--t2);margin-bottom:12px;padding:6px 12px;background:var(--s);border-radius:6px;border-left:2px solid var(--yl);">Wolt pays fleets an additional <b style="color:var(--yl)">18%</b> on top of courier earnings — not visible to couriers. CPO in the CSVs = courier-facing pay only; actual Wolt cost per order is ~18% higher.</div>
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;background:var(--s);border:1px solid var(--bd);border-radius:8px;padding:10px 16px;">
@@ -128,12 +128,28 @@ const WA_BONUSES = [
   {date:"2026-03-13",platform:"Wolt",type:"Saturday 60% bonus REMOVED",window:"Sat evening"},
 ];
 
+const WA_REGULATORY = [
+  {date:"2026-05-11",event:"On-the-spot fines for non-residents",detail:"From 1 June, non-residents in Malta face on-the-spot fines for breaking laws. Shared via news link in group — courier community alarmed.",impact:"high"},
+  {date:"2026-05-08",event:"MOU agreement pending",detail:"\"Manav bhai\" message: MOU agreement between courier community rep and authorities expected within 1–2 weeks (mid-May). Would ensure couriers get paid \"properly like all other workers in Malta\". Timing may align with elections.",impact:"high"},
+  {date:"2026-05-08",event:"300+ fake Wolt accounts discovered",detail:"Authorities found 300+ fake accounts. Led to near-deportation decision. Face verification now being rolled out on Wolt app. Fake account sellers still active despite crackdown.",impact:"high"},
+  {date:"2026-05-08",event:"Courier tag / cab-permit licensing discussed",detail:"Authorities considered requiring Maltese licenses with courier tags (similar to cab permits). Blocked for now by community rep intervention.",impact:"medium"},
+  {date:"2026-05-06",event:"WT Global work permit delays — 4+ months",detail:"Courier submitted application Dec 29, still \"SUBMITTED\" status after 4+ months. JobPlus warned: cannot work without blue paper/ID card. Fine risk up to €3,000.",impact:"medium"},
+  {date:"2026-05-11",event:"JobPlus checking Wolt Market Qormi",detail:"JobPlus enforcement at Wolt Market locations continues. Civil dress checks reported. Couriers without approval warned.",impact:"medium"},
+  {date:"2026-05-06",event:"JobPlus caught courier — warning issued",detail:"Courier caught working with submitted (not approved) status. Warned: next offence = deportation risk. Cannot work until blue paper arrives.",impact:"medium"},
+  {date:"2026-05-08",event:"Wolt rate cut confirmed (again)",detail:"\"Wolt mein aur bhi paise kam kardiya\" — multiple couriers confirm further rate decrease on May 8. Strike discussion follows but fails to mobilise.",impact:"high"},
+  {date:"2026-05-08",event:"Wolt accounts still being sold",detail:"\"Three Wolt accounts available\" — immediately followed by warning \"If anyone use they will deport\". Black market persists despite 300+ account crackdown.",impact:"medium"},
+];
+
 const WA_FLEET_COSTS = [
   {item:"Fleet revenue share",amount:"~40–50%",notes:"WT Global, Ezee, others"},
   {item:"Bike fleet rental",amount:"€400–450/month",notes:"Standard motorbike"},
   {item:"MannaEV electric",amount:"€100/week + €70/mo battery",notes:"Electric fleet"},
-  {item:"Wolt bag",amount:"€150 one-time",notes:"Deducted from earnings"},
+  {item:"Wolt bag (new)",amount:"€40 at Wolt store",notes:"€150 is advance/deposit, not bag price"},
+  {item:"Wolt bag (used)",amount:"€25 at Wolt store",notes:"Available if advance already paid"},
   {item:"Fuel (motorbike)",amount:"~€10/day at 150 km",notes:"Self-reported"},
+  {item:"No-entry fine (LESA)",amount:"€75",notes:"Courier report, May 11"},
+  {item:"Parking fine",amount:"€23.29",notes:"Parking on private property, May 10"},
+  {item:"Wolt deduction (rule violation)",amount:"€60",notes:"Courier report, May 8 — \"Bahut zyada rules\""},
 ];
 
 const WA_SENTIMENT = [
@@ -244,7 +260,7 @@ function renderFleet(fleet) {
 
   // Vehicle mix
   const veh = {};
-  act.forEach(c => { const v=c.v||'Unknown'; if(!veh[v])veh[v]={c:0,d:0,oh:0}; veh[v].c++; veh[v].d+=(c.del||0); veh[v].oh+=(c.oh||0); });
+  act.forEach(c => { const v=c.v||'Unknown'; if(!veh[v])veh[v]={c:0,d:0,oh:0,e:0}; veh[v].c++; veh[v].d+=(c.del||0); veh[v].oh+=(c.oh||0); veh[v].e+=(c.e||0); });
 
   let h = `<div class="pane" id="pane-${fleet.key}">`;
 
@@ -289,9 +305,9 @@ function renderFleet(fleet) {
   // Vehicle mix
   const vKeys = Object.keys(veh).sort((a,b)=>veh[b].d-veh[a].d);
   if(vKeys.length>0) {
-    h += `<div class="sect"><h2>Vehicle Mix</h2><table><thead><tr><th>Vehicle</th><th class="n">Couriers</th><th class="n">Deliveries</th><th class="n">OH</th><th class="n">DPH</th></tr></thead><tbody>`;
+    h += `<div class="sect"><h2>Vehicle Mix</h2><table><thead><tr><th>Vehicle</th><th class="n">Couriers</th><th class="n">Deliveries</th><th class="n">OH</th><th class="n">DPH</th><th class="n">EPD</th></tr></thead><tbody>`;
     vKeys.forEach(v => {
-      const d=veh[v]; h+=`<tr><td>${v}</td><td class="n">${d.c}</td><td class="n">${d.d.toLocaleString()}</td><td class="n">${Math.round(d.oh)}h</td><td class="n">${d.oh>0?(d.d/d.oh).toFixed(2):'-'}</td></tr>`;
+      const d=veh[v]; h+=`<tr><td>${v}</td><td class="n">${d.c}</td><td class="n">${d.d.toLocaleString()}</td><td class="n">${Math.round(d.oh)}h</td><td class="n">${d.oh>0?(d.d/d.oh).toFixed(2):'-'}</td><td class="n">${d.d>0?'€'+(d.e/d.d).toFixed(2):'-'}</td></tr>`;
     });
     h += `</tbody></table></div>`;
   }
