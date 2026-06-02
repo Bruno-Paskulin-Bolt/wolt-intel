@@ -70,7 +70,7 @@ tbody tr:hover{background:var(--s2)}
 <div class="ctn">
 <header>
 <h1>Wolt Fleet Intelligence — Malta</h1>
-<span class="meta">Data window: Apr 11 – May 11, 2026 (30 days) · Last updated: May 15, 2026</span>
+<span class="meta">Data window: Apr 11 – May 11, 2026 (30 days) · WhatsApp intel through Jun 2 · Last updated: Jun 2, 2026</span>
 </header>
 <div style="font-size:11px;color:var(--t2);margin-bottom:12px;padding:6px 12px;background:var(--s);border-radius:6px;border-left:2px solid var(--yl);">Wolt pays fleets an additional <b style="color:var(--yl)">18%</b> on top of courier earnings — not visible to couriers. CPO in the CSVs = courier-facing pay only; actual Wolt cost per order is ~18% higher.</div>
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;background:var(--s);border:1px solid var(--bd);border-radius:8px;padding:10px 16px;">
@@ -108,6 +108,12 @@ const WA_ORDERS = [
 ];
 
 const WA_RATES = [
+  {date:"2026-05-30",rate:"€10/session (missing)",dist:"—",ePerKm:"—",src:"Road Update",ctx:"Wolt unpaid earnings for 3–5pm window. ~1,000 couriers affected. Estimated €10,000 missing total. No response from Wolt."},
+  {date:"2026-05-28",rate:"€9 (disputed)",dist:"—",ePerKm:"—",src:"Road Update",ctx:"Courier recovered €9 from Wolt support after aggressive complaint. \"I got my 9 euro after fucking too much and teach them wolt policies\""},
+  {date:"2026-05-25",rate:"€11",dist:"~15 km",ePerKm:"€0.73",src:"Road Update",ctx:"Naxxar to St Paul Bay order — relatively high-value sighting"},
+  {date:"2026-05-23",rate:"€3–3.50/order",dist:"—",ePerKm:"—",src:"Road Update",ctx:"Experienced courier benchmark: \"With current rates (for one task) we can survive, €3 to €3.5/order long term.\" Last year lowest was €0.50/km."},
+  {date:"2026-05-14",rate:"€5 + €8 (auto-removed)",dist:"—",ePerKm:"—",src:"Road Update",ctx:"Wolt app glitch: orders appeared then auto-removed after courier arrived at venue. \"Totally time waste today\""},
+  {date:"2026-05-13",rate:"€2",dist:"—",ePerKm:"—",src:"Road Update",ctx:"\"2 euro me kaun Etna mahnat krega\" — €2/order complaints continue"},
   {date:"2026-05-09",rate:"€2.20",dist:"3 km",ePerKm:"€0.73",src:"Road Update",ctx:"3km delivery, 80€ order value — courier outraged at low pay vs order value"},
   {date:"2026-05-05",rate:"€100/day",dist:"150 km",ePerKm:"€0.67",src:"Petition",ctx:"Daily total: 150km to make €100, €10 fuel, 40% fleet cut → ~€54 net"},
   {date:"2026-05-04",rate:"€2",dist:"7 km",ePerKm:"€0.29",src:"Petition",ctx:"\"take the order of 2 Euro and deliver 7km\""},
@@ -123,21 +129,31 @@ const WA_RATES = [
 ];
 
 const WA_BONUSES = [
+  {date:"2026-05-30",platform:"Wolt",type:"Bonus active — orders withheld",window:"Unknown",ctx:"\"Every bonus they hold long orders in first 30 min and last 30 min. After bonus they start giving.\" Courier got only 2 orders during entire bonus window."},
+  {date:"2026-05-27",platform:"Wolt",type:"50% bonus — CARS ONLY",window:"Tue+Wed",ctx:"\"No bonus for bike apps.\" \"Only Saturday [for bikes], that also 2 hours.\" Bikes excluded from weekday bonuses."},
+  {date:"2026-05-16",platform:"Wolt",type:"90% bonus (screenshot)",window:"Evening",ctx:"\"Just only Big Biscuit bro 90% Bonus. Nothing else.\" Orders suppressed during bonus window — zero orders since activation."},
   {date:"2026-05-09",platform:"Wolt",type:"+40% per order",window:"08:30–10:30"},
   {date:"2026-05-08",platform:"Wolt",type:"€7 for 7 pickups",window:"18:30–21:30"},
   {date:"2026-03-13",platform:"Wolt",type:"Saturday 60% bonus REMOVED",window:"Sat evening"},
 ];
 
 const WA_REGULATORY = [
-  {date:"2026-05-11",event:"On-the-spot fines for non-residents",detail:"From 1 June, non-residents in Malta face on-the-spot fines for breaking laws. Shared via news link in group — courier community alarmed.",impact:"high"},
+  {date:"2026-05-31",event:"Mini-protest: coordinated 10-min offline",detail:"\"Guys can we go offline for 10 minutes please\" — posted simultaneously in both groups. Some participated (\"Already offline\"). Busy day but low rates. Major bike accident same evening (Moro Marsa road — bike broken in half).",impact:"medium"},
+  {date:"2026-05-30",event:"Wolt unpaid earnings — ~€10K missing",detail:"Couriers report unpaid earnings for 3–5pm window 2 days prior. Estimated 1,000 couriers × €10 = €10,000. Individual reports of €20+ missing. No response from Wolt support.",impact:"high"},
+  {date:"2026-05-30",event:"Wolt vehicle type separation",detail:"\"90% case restaurant order for bike, grocery/other items for car, small order for bike.\" Wolt now routing by vehicle type — bikes get food orders, cars get grocery/bulk.",impact:"medium"},
+  {date:"2026-05-25",event:"LESA enforcement surge",detail:"Heavy checking reported: Bugibba without license, Swieqi tunnel, Kennedy, Gzira Dr Juice (delivery-courier-specific stops), Kappara fuel station, Qormi, Zebbug, Paola, Marsaskala, Valletta both sides. LESA targeting couriers specifically.",impact:"high"},
+  {date:"2026-05-23",event:"Bundle tasks identified as #1 frustration",detail:"Experienced courier: \"What is killing our job is BUNDLE TASKS. With current rates (€3–3.5/order) we can survive. Stop bundle tasks = order after order, better payment overall.\" Two solutions proposed: collective rejection or targeted strike.",impact:"high"},
+  {date:"2026-05-17",event:"Coordinated offline action attempted",detail:"\"Go offline everyone. They didn't increase the amount.\" Both groups. Limited participation.",impact:"medium"},
+  {date:"2026-05-16",event:"TCN annual costs breakdown shared",detail:"Total ~€1,900–2,200/year: Single Permit €600, Pre-Departure €250, Skills Pass €230–475, Medical €150–260, Insurance €140+, Driving classes ~€230, Integration courses ~€250/stage × 4 = €1,000. 2-year wait for government classes. \"We are not slaves\"",impact:"medium"},
+  {date:"2026-05-14",event:"Transport Malta cab sector rule change — courier warning",detail:"New rules in cab sector due to one driver. Courier warns: \"if Transport Malta notice such kind of regulations for breaking rules they definitely implement new law for couriers.\" Specific concern about U-turns, running red lights.",impact:"medium"},
+  {date:"2026-05-14",event:"Wolt app auto-removing orders",detail:"\"Application working hone k bad 2 bar order aaya, venue par phuchne k bad automatic remove.\" Orders appearing then vanishing after courier arrives — time waste, no compensation.",impact:"medium"},
+  {date:"2026-05-12",event:"Wolt new drama — screenshots",detail:"\"Wolt new drama\" with 3 screenshots posted. App issues and policy changes continuing to frustrate couriers.",impact:"low"},
+  {date:"2026-05-11",event:"On-the-spot fines for non-residents from June 1",detail:"From 1 June, non-residents in Malta face on-the-spot fines for breaking laws. Shared via news link in group — courier community alarmed.",impact:"high"},
   {date:"2026-05-08",event:"MOU agreement pending",detail:"\"Manav bhai\" message: MOU agreement between courier community rep and authorities expected within 1–2 weeks (mid-May). Would ensure couriers get paid \"properly like all other workers in Malta\". Timing may align with elections.",impact:"high"},
   {date:"2026-05-08",event:"300+ fake Wolt accounts discovered",detail:"Authorities found 300+ fake accounts. Led to near-deportation decision. Face verification now being rolled out on Wolt app. Fake account sellers still active despite crackdown.",impact:"high"},
   {date:"2026-05-08",event:"Courier tag / cab-permit licensing discussed",detail:"Authorities considered requiring Maltese licenses with courier tags (similar to cab permits). Blocked for now by community rep intervention.",impact:"medium"},
   {date:"2026-05-06",event:"WT Global work permit delays — 4+ months",detail:"Courier submitted application Dec 29, still \"SUBMITTED\" status after 4+ months. JobPlus warned: cannot work without blue paper/ID card. Fine risk up to €3,000.",impact:"medium"},
-  {date:"2026-05-11",event:"JobPlus checking Wolt Market Qormi",detail:"JobPlus enforcement at Wolt Market locations continues. Civil dress checks reported. Couriers without approval warned.",impact:"medium"},
-  {date:"2026-05-06",event:"JobPlus caught courier — warning issued",detail:"Courier caught working with submitted (not approved) status. Warned: next offence = deportation risk. Cannot work until blue paper arrives.",impact:"medium"},
   {date:"2026-05-08",event:"Wolt rate cut confirmed (again)",detail:"\"Wolt mein aur bhi paise kam kardiya\" — multiple couriers confirm further rate decrease on May 8. Strike discussion follows but fails to mobilise.",impact:"high"},
-  {date:"2026-05-08",event:"Wolt accounts still being sold",detail:"\"Three Wolt accounts available\" — immediately followed by warning \"If anyone use they will deport\". Black market persists despite 300+ account crackdown.",impact:"medium"},
 ];
 
 const WA_FLEET_COSTS = [
@@ -150,15 +166,22 @@ const WA_FLEET_COSTS = [
   {item:"No-entry fine (LESA)",amount:"€75",notes:"Courier report, May 11"},
   {item:"Parking fine",amount:"€23.29",notes:"Parking on private property, May 10"},
   {item:"Wolt deduction (rule violation)",amount:"€60",notes:"Courier report, May 8 — \"Bahut zyada rules\""},
+  {item:"TCN annual compliance costs",amount:"€1,900–2,200/year",notes:"Permits, skills pass, medical, insurance, driving, integration courses (May 16 breakdown)"},
 ];
 
 const WA_SENTIMENT = [
-  {theme:"Earnings declining",detail:"Consistent complaints about rate decreases from Feb→May. Feb ~€0.39/km, Apr €0.30-0.50/km. Most recent: €0.29/km for 7km order."},
-  {theme:"Rejection as leverage",detail:"Wolt policy: 5 rejected orders = 1hr offline. Couriers discuss coordinating to reject low-pay orders but struggle to unify."},
-  {theme:"Distance manipulation",detail:"At least one documented case of 0.7km shown vs 5.8km actual route. Recurring complaint."},
+  {theme:"Bundle tasks = #1 complaint",detail:"Experienced courier (May 23): \"What is killing our job is BUNDLE TASKS.\" Single-order rates (€3–3.50) are survivable — bundling destroys per-order economics. Only actionable strike target per group consensus."},
+  {theme:"Earnings declining",detail:"Consistent complaints about rate decreases from Feb→May. Feb ~€0.39/km, Apr €0.30-0.50/km. Most recent: €2/order for any distance. Night bonus removed, per-km reduced, waiting payment cancelled."},
+  {theme:"Wolt manipulates bonus windows",detail:"Couriers believe Wolt withholds orders during first/last 30 min of bonus windows, then releases after bonus ends. \"In whole bonus time i got just 2 orders.\" Car-only bonuses exclude bike couriers from weekday promos."},
+  {theme:"Missing earnings / unpaid work",detail:"May 30: ~1,000 couriers missing pay for 3–5pm window (~€10K total). Individual €20+ missing reports. May 28: courier recovered €9 only after aggressive support escalation. Wolt support non-responsive."},
+  {theme:"Dual IDs undermine solidarity",detail:"\"Full timers use 2 IDs, they don't care if order is low rate.\" Multiple Wolt accounts per person = can't coordinate rejection. Strike attempts fail because illegal workers fear police checks during strikes."},
+  {theme:"Strike talk escalating but fragmented",detail:"May 13: strike planning with location proposed (Bugibba/Salina park). May 17+31: coordinated offline attempts. May 23: anti-strike faction says \"last strike got us nothing.\" May 25: \"Have you ever wondered why there are no British, Italian, German or Maltese couriers?\""},
+  {theme:"Wolt app reliability worsening",detail:"May 14: orders auto-removed after arrival at venue. May 19: \"App isn't working.\" May 27: rate display broken. May 28: accept button not working. Chronic instability adds unpaid time."},
+  {theme:"Vehicle separation — bike vs car",detail:"Wolt now routing 90% restaurant orders to bikes, grocery/bulk to cars. Small orders to bikes. Cars get exclusive bonuses (50% weekday). Bike couriers feel squeezed."},
+  {theme:"LESA/enforcement surge",detail:"Courier-specific LESA stops at Gzira Dr Juice, Swieqi, Kappara, Bugibba, Qormi, Kennedy, Valletta. \"Heavy checking only delivery courier.\" From Jun 1: on-the-spot fines for non-residents."},
+  {theme:"TCN cost burden",detail:"€1,900–2,200/year in permits, courses, insurance, driving license. 2-year wait for government integration classes. Private alternatives €250/stage × 4. \"We are not slaves.\""},
   {theme:"Multi-apping is the norm",detail:"Couriers run Bolt + Wolt simultaneously. Prefer Bolt for long-distance (higher €/km). Cherry-pick Wolt for short add-ons."},
   {theme:"Fleet commission resentment",detail:"40-50% fleet take + rental + fuel means couriers keep ~€0.20-0.35/km net. Earns less than dishwashers per self-reports."},
-  {theme:"Strike talk, no action",detail:"Periodic strike discussions (especially around rate cuts) but consistently fail to mobilise. \"Noone agree for strike\""},
   {theme:"Fake accounts / JobPlus checks",detail:"300+ fake Wolt accounts discovered. Regular JobPlus enforcement checks at Wolt Market locations. Couriers warn each other."},
 ];
 
