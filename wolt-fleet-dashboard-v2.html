@@ -70,7 +70,7 @@ tbody tr:hover{background:var(--s2)}
 <div class="ctn">
 <header>
 <h1>Wolt Fleet Intelligence — Malta</h1>
-<span class="meta">Data window: Apr 11 – May 11, 2026 (30 days) · WhatsApp intel through Jun 2 · Last updated: Jun 2, 2026</span>
+<span class="meta">Data window: Apr 11 – May 11, 2026 (30 days) · WhatsApp intel through Jun 2 · Last updated: Jun 3, 2026</span>
 </header>
 <div style="font-size:11px;color:var(--t2);margin-bottom:12px;padding:6px 12px;background:var(--s);border-radius:6px;border-left:2px solid var(--yl);">Wolt pays fleets an additional <b style="color:var(--yl)">18%</b> on top of courier earnings — not visible to couriers. CPO in the CSVs = courier-facing pay only; actual Wolt cost per order is ~18% higher.</div>
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;background:var(--s);border:1px solid var(--bd);border-radius:8px;padding:10px 16px;">
@@ -105,6 +105,25 @@ const WA_ORDERS = [
   {date:"2026-05-05",time:"10:38",platform:"Bolt",earnings:2.86,distKm:1.8,estMin:8,ePerKm:1.59,restaurant:"Snack Bar by Jeff's",addon:true},
   {date:"2026-05-05",time:"08:51",platform:"Wolt",earnings:2.49,distKm:6.6,estMin:13,ePerKm:0.38,restaurant:"Beauty Factory",addon:false},
   {date:"2026-05-05",time:"08:38",platform:"Bolt",earnings:1.96,distKm:4.8,estMin:7,ePerKm:0.41,restaurant:"Meats and Eats Naxxar",addon:false},
+  {date:"2026-06-02",time:"16:20",platform:"Wolt",earnings:null,distKm:24,estMin:null,ePerKm:null,restaurant:"Scooby's Pets & Garden Qawra",addon:false,note:"Cancelled — ~24km total, courier said 'After update they reduced prices again, only counting venue to customer'"},
+  {date:"2026-06-02",time:"14:19",platform:"Bolt",earnings:3.70,distKm:15,estMin:22,ePerKm:0.25,restaurant:"The Tiffin Bowl Plaza Shopping",addon:false},
+  {date:"2026-06-02",time:"14:32",platform:"Wolt",earnings:4.46,distKm:6.9,estMin:11,ePerKm:0.65,restaurant:"Little Greens Naxxar",addon:false,note:"Heavy order 12-20kg, car courier"},
+  {date:"2026-06-01",time:"16:03",platform:"Wolt",earnings:4.32,distKm:10.2,estMin:15,ePerKm:0.42,restaurant:"IdeaNatur 2000 Pet Shop",addon:false},
+  {date:"2026-06-01",time:"16:08",platform:"Wolt",earnings:7.19,distKm:14.3,estMin:20,ePerKm:0.50,restaurant:"Greens Supermarket Mriehel",addon:false,note:"Heavy order 6-12kg, cash order"},
+  {date:"2026-05-31",time:"14:21",platform:"Wolt",earnings:3.70,distKm:15,estMin:22,ePerKm:0.25,restaurant:"The Tiffin Bowl Plaza Shopping Burmrad",addon:false},
+  {date:"2026-05-28",time:"23:41",platform:"Wolt",earnings:0.45,distKm:null,estMin:null,ePerKm:null,restaurant:"San Gwann to Birkirkara",addon:false,note:"€0.45 — courier: 'Moja to ek order Ka 45 cent'"},
+  {date:"2026-05-30",time:"16:18",platform:"Wolt",earnings:0.46,distKm:null,estMin:null,ePerKm:null,restaurant:"Task offer",addon:false,note:"Cropped screenshot showing €0.46 task offer"},
+  {date:"2026-05-28",time:"16:37",platform:"Wolt",earnings:1.00,distKm:null,estMin:null,ePerKm:null,restaurant:"Task offer",addon:false,note:"€1.00 task offer — daily total €80.08"},
+  {date:"2026-05-28",time:"17:55",platform:"Wolt",earnings:null,distKm:null,estMin:20,ePerKm:null,restaurant:"Il-Forn Ta' L-Ghawdxi Qormi",addon:false,note:"PRICE HIDDEN — 'The price cannot be shown right now. You can still accept and you will get paid.'"},
+  {date:"2026-05-16",time:"20:26",platform:"Wolt",earnings:19.00,distKm:15.2,estMin:22,ePerKm:1.25,restaurant:"Wolt Market Burmarrad",addon:false,note:"Alcohol ID check, bike courier, Burmarrad→Mellieha — high value order"},
+];
+
+const WA_DAILY_EARNINGS = [
+  {date:"2026-05-27",platform:"Wolt",deliveries:37,distKm:212.7,earnings:218.08,tips:4.00,ePerDel:5.89,ePerKm:1.02,src:"Screenshot — daily stats page"},
+  {date:"2026-05-27",platform:"Wolt",deliveries:null,distKm:null,earnings:221.08,tips:null,ePerDel:null,ePerKm:null,src:"Gross earnings breakdown — daily row"},
+  {date:"2026-05-28",platform:"Wolt",deliveries:null,distKm:null,earnings:110.06,tips:null,ePerDel:null,ePerKm:null,src:"Gross earnings — circled by courier as evidence of missing pay (vs €221 day before)"},
+  {date:"2026-05-29",platform:"Wolt",deliveries:null,distKm:null,earnings:183.68,tips:null,ePerDel:null,ePerKm:null,src:"Gross earnings breakdown"},
+  {date:"2026-05-30",platform:"Wolt",deliveries:null,distKm:null,earnings:28.26,tips:null,ePerDel:null,ePerKm:null,src:"Gross earnings — very low day"},
 ];
 
 const WA_RATES = [
@@ -131,6 +150,10 @@ const WA_RATES = [
 const WA_BONUSES = [
   {date:"2026-05-30",platform:"Wolt",type:"Bonus active — orders withheld",window:"Unknown",ctx:"\"Every bonus they hold long orders in first 30 min and last 30 min. After bonus they start giving.\" Courier got only 2 orders during entire bonus window."},
   {date:"2026-05-27",platform:"Wolt",type:"50% bonus — CARS ONLY",window:"Tue+Wed",ctx:"\"No bonus for bike apps.\" \"Only Saturday [for bikes], that also 2 hours.\" Bikes excluded from weekday bonuses."},
+  {date:"2026-05-28",platform:"Wolt",type:"50% More Per Order",window:"11:53–12:53",ctx:"Screenshot of full bonus schedule. Same day: 'Significantly increased' 12:53-14:00, 'Increased' 18:00-21:00"},
+  {date:"2026-05-29",platform:"Wolt",type:"Maximum increased earnings",window:"11:00–14:00 + 18:30–21:30",ctx:"Also 'Significantly increased' 08:00-11:00. Two max-tier windows in one day."},
+  {date:"2026-05-30",platform:"Wolt",type:"70% More Per Order + others",window:"Multiple",ctx:"'Significantly increased' 08:00-11:00, 'Increased' 11:00-14:00, '70% More Per Order' (cut off). Despite bonuses, courier got only 2 orders during window."},
+  {date:"2026-05-28",platform:"Wolt",type:"Price hidden from courier",window:"17:55",ctx:"'The price cannot be shown right now. You can still accept the delivery and you will get paid.' Il-Forn Ta' L-Ghawdxi Qormi. Wolt concealing order value."},
   {date:"2026-05-16",platform:"Wolt",type:"90% bonus (screenshot)",window:"Evening",ctx:"\"Just only Big Biscuit bro 90% Bonus. Nothing else.\" Orders suppressed during bonus window — zero orders since activation."},
   {date:"2026-05-09",platform:"Wolt",type:"+40% per order",window:"08:30–10:30"},
   {date:"2026-05-08",platform:"Wolt",type:"€7 for 7 pickups",window:"18:30–21:30"},
